@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GameFinder
+namespace GameFinder.Finder
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for FinderView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FinderView : Page
     {
-        public MainWindow()
+        public FinderView()
         {
             InitializeComponent();
         }
