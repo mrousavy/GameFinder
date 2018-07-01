@@ -54,10 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Config.cs" />
     <Compile Include="ErrorDialog\ErrorDialogView.xaml.cs">
       <DependentUpon>ErrorDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ErrorDialog\ErrorDialogViewModel.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Finder\FinderView.xaml.cs">
       <DependentUpon>FinderView.xaml</DependentUpon>
     </Compile>
