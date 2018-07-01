@@ -2,6 +2,7 @@
     x:Class="GameFinder.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:errorDialog="clr-namespace:GameFinder.ErrorDialog"
     StartupUri="Main/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -11,6 +12,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type errorDialog:ErrorDialogViewModel}">
+                <errorDialog:ErrorDialogView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
