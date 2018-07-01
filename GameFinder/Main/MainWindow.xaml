@@ -24,7 +24,10 @@
         <main:MainViewModel />
     </Window.DataContext>
     <Grid>
-        <md:Transitioner SelectedIndex="{Binding TransitionerIndex}">
+        <md:Transitioner
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            SelectedIndex="{Binding TransitionerIndex}">
             <login:LoginView />
             <finder:FinderView />
         </md:Transitioner>

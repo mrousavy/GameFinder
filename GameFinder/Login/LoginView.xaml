@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="400"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
     TextElement.FontSize="13"
@@ -19,5 +19,58 @@
     <UserControl.DataContext>
         <local:LoginViewModel />
     </UserControl.DataContext>
-    <Grid />
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Margin="15"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="22"
+            Text="Steam Login" />
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Text="Steam API Key:" />
+        <TextBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="200"
+            Margin="5"
+            md:HintAssist.Hint="Steam API Key"
+            Text="{Binding ApiKey}" />
+
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Text="Your Steam User ID:" />
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Width="200"
+            Margin="5"
+            md:HintAssist.Hint="Steam User ID"
+            Text="{Binding UserId}" />
+    </Grid>
 </UserControl>
