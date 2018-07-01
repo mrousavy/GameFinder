@@ -54,6 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Finder\FinderView.xaml.cs">
+      <DependentUpon>FinderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Finder\FinderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -71,14 +77,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Finder\FinderModel.cs" />
-    <Compile Include="Finder\FinderView.xaml.cs">
-      <DependentUpon>FinderView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Finder\FinderViewModel.cs" />
     <Compile Include="Login\LoginModel.cs" />
-    <Compile Include="Login\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Main\MainModel.cs" />
     <Compile Include="Main\MainViewModel.cs" />

@@ -18,7 +18,7 @@ namespace GameFinder.Finder
     /// <summary>
     /// Interaction logic for FinderView.xaml
     /// </summary>
-    public partial class FinderView : Page
+    public partial class FinderView : UserControl
     {
         public FinderView()
         {
