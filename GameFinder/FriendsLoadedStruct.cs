@@ -1,6 +1,6 @@
-﻿using Steam.Models.SteamCommunity;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Steam.Models.SteamCommunity;
 
 namespace GameFinder
 {

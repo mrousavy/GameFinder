@@ -1,13 +1,13 @@
-﻿using Jellyfish;
-using System;
+﻿using System;
+using Jellyfish;
 
 namespace GameFinder.UserSmall
 {
     public class UserSmallViewModel : ViewModel
     {
         private Uri _avatarUri;
-        private string _username;
         private ulong _userId;
+        private string _username;
 
         public UserSmallViewModel(ulong userId)
         {

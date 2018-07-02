@@ -16,6 +16,8 @@ namespace GameFinder.User
 
         private ObservableCollection<GameViewModel> _games;
 
+        private ICommand _loadGamesCommand;
+
         private ICommand _openProfileCommand;
 
         private string _realName;
@@ -23,11 +25,11 @@ namespace GameFinder.User
         private string _state;
 
         private string _url;
+
+        private ulong _userId;
         private string _username;
 
         private int _visibilityState;
-
-        private ulong _userId;
 
         public UserViewModel(ulong userId)
         {
@@ -89,8 +91,6 @@ namespace GameFinder.User
             get => _openProfileCommand;
             set => Set(ref _openProfileCommand, value);
         }
-
-        private ICommand _loadGamesCommand;
 
         public ICommand LoadGamesCommand
         {

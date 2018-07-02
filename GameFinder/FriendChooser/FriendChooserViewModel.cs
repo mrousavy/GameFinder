@@ -16,16 +16,28 @@ namespace GameFinder.FriendChooser
     public class FriendChooserViewModel : ViewModel
     {
         private ObservableCollection<UserSmallViewModel> _allFriends;
-        private bool _isDialogOpen;
+
+        private ObservableCollection<UserSmallViewModel> _chosenFriends;
         private object _dialogViewModel;
+        private bool _isDialogOpen;
+
+        private ICommand _okCommand;
+
+
+        public FriendChooserViewModel()
+        {
+            var feed = MessageFeed<bool>.Feed;
+            feed.MessageReceived += OnMessageReceived;
+            AllFriends = new ObservableCollection<UserSmallViewModel>();
+            ChosenFriends = new ObservableCollection<UserSmallViewModel>();
+            OkCommand = new RelayCommand(OkAction);
+        }
 
         public ObservableCollection<UserSmallViewModel> AllFriends
         {
             get => _allFriends;
             set => Set(ref _allFriends, value);
         }
-
-        private ObservableCollection<UserSmallViewModel> _chosenFriends;
 
         public ObservableCollection<UserSmallViewModel> ChosenFriends
         {
@@ -49,22 +61,10 @@ namespace GameFinder.FriendChooser
             set => Set(ref _isDialogOpen, value);
         }
 
-        private ICommand _okCommand;
-
         public ICommand OkCommand
         {
             get => _okCommand;
             set => Set(ref _okCommand, value);
-        }
-
-
-        public FriendChooserViewModel()
-        {
-            var feed = MessageFeed<bool>.Feed;
-            feed.MessageReceived += OnMessageReceived;
-            AllFriends = new ObservableCollection<UserSmallViewModel>();
-            ChosenFriends = new ObservableCollection<UserSmallViewModel>();
-            OkCommand = new RelayCommand(OkAction);
         }
 
         private async void OkAction(object o)
@@ -99,7 +99,8 @@ namespace GameFinder.FriendChooser
             try
             {
                 var friends = await FriendChooserModel.GetFriends();
-                AllFriends = new ObservableCollection<UserSmallViewModel>(friends.Select(FriendChooserModel.ProfileToUser));
+                AllFriends =
+                    new ObservableCollection<UserSmallViewModel>(friends.Select(FriendChooserModel.ProfileToUser));
 
                 IsDialogOpen = false;
             } catch (Exception ex)

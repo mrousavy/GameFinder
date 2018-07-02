@@ -7,10 +7,8 @@ namespace GameFinder.FriendChooser
 {
     public class FriendChooserModel
     {
-        public static Task<SteamCommunityProfileModel> GetProfile(ulong steamId)
-        {
-            return Session.SteamUser.GetCommunityProfileAsync(steamId);
-        }
+        public static Task<SteamCommunityProfileModel> GetProfile(ulong steamId) =>
+            Session.SteamUser.GetCommunityProfileAsync(steamId);
 
         public static async Task<IList<SteamCommunityProfileModel>> GetFriends()
         {
