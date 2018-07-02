@@ -1,8 +1,13 @@
-﻿namespace GameFinder
+﻿using SteamWebAPI2.Interfaces;
+
+namespace GameFinder
 {
     public static class Session
     {
         public static Config Config { get; set; }
+
+        public static IPlayerService SteamPlayer { get; set; }
+        public static ISteamUser SteamUser { get; set; }
 
         public static string ApiKey
         {

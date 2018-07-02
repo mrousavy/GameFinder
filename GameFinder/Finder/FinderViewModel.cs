@@ -3,11 +3,9 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GameFinder.ErrorDialog;
 using GameFinder.LoadingDialog;
-using GameFinder.Models;
 using GameFinder.User;
 using Jellyfish;
 using Steam.Models.SteamCommunity;
-using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.Finder
 {
@@ -24,7 +22,7 @@ namespace GameFinder.Finder
 
         public FinderViewModel()
         {
-            var feed = MessageFeed<LoggedInStruct>.Feed;
+            var feed = MessageFeed<bool>.Feed;
             feed.MessageReceived += OnMessageReceived;
         }
 
@@ -56,19 +54,14 @@ namespace GameFinder.Finder
             set => Set(ref _friends, value);
         }
 
-        public ISteamUser SteamUser { get; set; }
-        public IPlayerService SteamPlayer { get; set; }
-
-        private async void OnMessageReceived(LoggedInStruct message)
+        private async void OnMessageReceived(bool loggedIn)
         {
-            SteamUser = message.SteamUser;
-            SteamPlayer = message.SteamPlayer;
             await LoadAsync().ConfigureAwait(false);
         }
 
         private async Task LoadAsync()
         {
-            if (SteamUser == null)
+            if (Session.SteamUser == null)
                 return;
 
             DialogViewModel = new LoadingDialogViewModel();
@@ -81,7 +74,7 @@ namespace GameFinder.Finder
 
                 MyProfileViewModel = await GetUser(Session.UserId);
 
-                var friendsListResponse = await SteamUser.GetFriendsListAsync(Session.UserId);
+                var friendsListResponse = await Session.SteamUser.GetFriendsListAsync(Session.UserId);
                 foreach (var friend in friendsListResponse.Data)
                 {
                     var model = await GetUser(friend.SteamId);
@@ -98,7 +91,7 @@ namespace GameFinder.Finder
 
         private async Task<UserViewModel> GetUser(ulong steamId)
         {
-            var profile = await SteamUser.GetCommunityProfileAsync(steamId).ConfigureAwait(false);
+            var profile = await Session.SteamUser.GetCommunityProfileAsync(steamId).ConfigureAwait(false);
             return ProfileToUser(profile);
         }
 

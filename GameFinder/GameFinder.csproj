@@ -78,7 +78,6 @@
     <Compile Include="Login\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\LoggedInStruct.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="User\UserView.xaml.cs">
       <DependentUpon>UserView.xaml</DependentUpon>

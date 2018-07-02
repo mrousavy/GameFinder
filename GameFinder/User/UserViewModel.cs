@@ -119,8 +119,7 @@ namespace GameFinder.User
         {
             try
             {
-                var player = new PlayerService(Session.ApiKey);
-                var gamesResponse = await player.GetOwnedGamesAsync(UserId, true, false);
+                var gamesResponse = await Session.SteamPlayer.GetOwnedGamesAsync(UserId, true, false);
                 var ownedGames = gamesResponse.Data.OwnedGames;
                 var games = ownedGames?.Select(OwnedGameToGame);
 

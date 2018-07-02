@@ -1,5 +1,4 @@
-﻿using GameFinder.Models;
-using Jellyfish;
+﻿using Jellyfish;
 using MaterialDesignThemes.Wpf.Transitions;
 using SteamWebAPI2.Interfaces;
 
@@ -12,10 +11,10 @@ namespace GameFinder.Login
             Session.ApiKey = apiKey;
             Session.UserId = ulong.Parse(userId);
 
-            var user = new SteamUser(apiKey);
-            var player = new PlayerService(apiKey);
-            var feed = MessageFeed<LoggedInStruct>.Feed;
-            feed.Notify(new LoggedInStruct(user, player));
+            Session.SteamUser = new SteamUser(apiKey);
+            Session.SteamPlayer = new PlayerService(apiKey);
+            var feed = MessageFeed<bool>.Feed;
+            feed.Notify(true);
 
             Transitioner.MoveNextCommand.Execute(null, null);
         }
