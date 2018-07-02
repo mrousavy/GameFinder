@@ -22,7 +22,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:UrlToImageConverter x:Key="UrlToImageConverter" />
-        <converter:SteamStateToColorConverter x:Key="SteamStateToColorConverter" />
+        <BitmapImage x:Key="DefaultAvatar" UriSource="/Resources/DefaultAvatar.png" />
     </UserControl.Resources>
 
     <md:Card
@@ -41,14 +41,13 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-
             <Image
                 Grid.Row="0"
                 Grid.Column="0"
                 Width="40"
                 Height="40"
                 Margin="7"
-                Source="{Binding AvatarUri, Converter={StaticResource UrlToImageConverter}}" />
+                Source="{Binding AvatarUri, Converter={StaticResource UrlToImageConverter}, FallbackValue={StaticResource DefaultAvatar}, TargetNullValue={StaticResource DefaultAvatar}}" />
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="1"

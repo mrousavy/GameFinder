@@ -5,10 +5,8 @@
     xmlns:converter="clr-namespace:GameFinder.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    HorizontalAlignment="Center"
     d:DesignHeight="150"
     d:DesignWidth="300"
-    Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
@@ -18,6 +16,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:UrlToImageConverter x:Key="UrlToImageConverter" />
+        <BitmapImage x:Key="DefaultGame" UriSource="/Resources/DefaultGame.png" />
     </UserControl.Resources>
 
     <Grid Margin="5">
@@ -33,10 +32,12 @@
         <Image
             Grid.Row="0"
             Grid.Column="0"
-            Margin="15"
+            Width="45"
+            Height="45"
+            Margin="8"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Source="{Binding IconUrl, Converter={StaticResource UrlToImageConverter}}" />
+            Source="{Binding IconUrl, Converter={StaticResource UrlToImageConverter}, FallbackValue={StaticResource DefaultGame}, TargetNullValue={StaticResource DefaultGame}}" />
 
         <TextBlock
             Grid.Row="0"
