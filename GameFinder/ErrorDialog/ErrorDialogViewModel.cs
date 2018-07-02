@@ -7,12 +7,6 @@ namespace GameFinder.ErrorDialog
     {
         private string _errorText;
 
-        public string ErrorText
-        {
-            get => _errorText;
-            set => Set(ref _errorText, value);
-        }
-
         public ErrorDialogViewModel(string errorText)
         {
             ErrorText = errorText;
@@ -21,6 +15,12 @@ namespace GameFinder.ErrorDialog
         public ErrorDialogViewModel(Exception exception)
         {
             ErrorText = exception.Message;
+        }
+
+        public string ErrorText
+        {
+            get => _errorText;
+            set => Set(ref _errorText, value);
         }
     }
 }

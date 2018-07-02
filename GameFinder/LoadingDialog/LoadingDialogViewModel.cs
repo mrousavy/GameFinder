@@ -5,6 +5,7 @@ namespace GameFinder.LoadingDialog
     public class LoadingDialogViewModel : ViewModel
     {
         private int _progress;
+
         public int Progress
         {
             get => _progress;

@@ -17,6 +17,20 @@ namespace GameFinder.Finder
     public class FinderViewModel : ViewModel
     {
         private object _dialogViewModel;
+
+        private ObservableCollection<UserViewModel> _friends;
+
+        private bool _isDialogOpen;
+
+        private UserViewModel _myProfileViewModel;
+
+
+        public FinderViewModel()
+        {
+            var feed = MessageFeed<LoggedInStruct>.Feed;
+            feed.MessageReceived += OnMessageReceived;
+        }
+
         public object DialogViewModel
         {
             get => _dialogViewModel;
@@ -27,21 +41,18 @@ namespace GameFinder.Finder
             }
         }
 
-        private bool _isDialogOpen;
         public bool IsDialogOpen
         {
             get => _isDialogOpen;
             set => Set(ref _isDialogOpen, value);
         }
 
-        private UserViewModel _myProfileViewModel;
         public UserViewModel MyProfileViewModel
         {
             get => _myProfileViewModel;
             set => Set(ref _myProfileViewModel, value);
         }
 
-        private ObservableCollection<UserViewModel> _friends;
         public ObservableCollection<UserViewModel> Friends
         {
             get => _friends;
@@ -50,13 +61,6 @@ namespace GameFinder.Finder
 
         public ISteamUser SteamUser { get; set; }
         public IPlayerService SteamPlayer { get; set; }
-
-
-        public FinderViewModel()
-        {
-            var feed = MessageFeed<LoggedInStruct>.Feed;
-            feed.MessageReceived += OnMessageReceived;
-        }
 
         private async void OnMessageReceived(LoggedInStruct message)
         {
@@ -77,7 +81,7 @@ namespace GameFinder.Finder
                     Friends = new ObservableCollection<UserViewModel>();
                 else
                     Friends.Clear();
-                
+
                 MyProfileViewModel = await GetUser(Session.UserId);
 
                 var friendsListResponse = await SteamUser.GetFriendsListAsync(Session.UserId);
@@ -90,7 +94,8 @@ namespace GameFinder.Finder
                 IsDialogOpen = false;
             } catch (Exception ex)
             {
-                DialogViewModel = new ErrorDialogViewModel($"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
+                DialogViewModel = new ErrorDialogViewModel(
+                    $"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
             }
         }
 
@@ -103,11 +108,14 @@ namespace GameFinder.Finder
             return ProfileToUser(profile, games);
         }
 
-        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile, IEnumerable<OwnedGameModel> ownedGames)
+        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile,
+            IEnumerable<OwnedGameModel> ownedGames)
         {
             if (profile == null) return null;
 
-            string url = Extensions.Valid(profile.CustomURL) ? $"http://steamcommunity.com/id/{profile.CustomURL}" : null;
+            string url = Extensions.Valid(profile.CustomURL)
+                ? $"http://steamcommunity.com/id/{profile.CustomURL}"
+                : null;
             var games = ownedGames?.Select(OwnedGameToGame);
 
             return new UserViewModel

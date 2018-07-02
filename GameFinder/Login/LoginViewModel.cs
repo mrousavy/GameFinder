@@ -8,45 +8,14 @@ namespace GameFinder.Login
     public class LoginViewModel : ViewModel
     {
         private string _apiKey;
-        public string ApiKey
-        {
-            get => _apiKey;
-            set => Set(ref _apiKey, value);
-        }
-
-        private string _userId;
-        public string UserId
-        {
-            get => _userId;
-            set => Set(ref _userId, value);
-        }
-
-        private ICommand _loginCommand;
-        public ICommand LoginCommand
-        {
-            get => _loginCommand;
-            set => Set(ref _loginCommand, value);
-        }
 
         private object _dialogViewModel;
-        public object DialogViewModel
-        {
-            get => _dialogViewModel;
-            set
-            {
-                Set(ref _dialogViewModel, value);
-                IsDialogOpen = value != null;
-            }
-        }
 
         private bool _isDialogOpen;
-        public bool IsDialogOpen
-        {
-            get => _isDialogOpen;
-            set => Set(ref _isDialogOpen, value);
-        }
 
-        public LoginModel Model { get; }
+        private ICommand _loginCommand;
+
+        private string _userId;
 
         public LoginViewModel()
         {
@@ -62,6 +31,42 @@ namespace GameFinder.Login
                     LoginAction(null);
             }
         }
+
+        public string ApiKey
+        {
+            get => _apiKey;
+            set => Set(ref _apiKey, value);
+        }
+
+        public string UserId
+        {
+            get => _userId;
+            set => Set(ref _userId, value);
+        }
+
+        public ICommand LoginCommand
+        {
+            get => _loginCommand;
+            set => Set(ref _loginCommand, value);
+        }
+
+        public object DialogViewModel
+        {
+            get => _dialogViewModel;
+            set
+            {
+                Set(ref _dialogViewModel, value);
+                IsDialogOpen = value != null;
+            }
+        }
+
+        public bool IsDialogOpen
+        {
+            get => _isDialogOpen;
+            set => Set(ref _isDialogOpen, value);
+        }
+
+        public LoginModel Model { get; }
 
         private void LoginAction(object o)
         {

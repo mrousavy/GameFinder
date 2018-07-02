@@ -1,7 +1,5 @@
-﻿
-namespace GameFinder.Finder
+﻿namespace GameFinder.Finder
 {
     public class FinderModel
-    {
-    }
+    { }
 }

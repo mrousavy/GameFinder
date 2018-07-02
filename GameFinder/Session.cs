@@ -13,6 +13,7 @@
                     Config.ApiKey = value;
             }
         }
+
         public static ulong UserId
         {
             get => Config?.UserId ?? 0;
