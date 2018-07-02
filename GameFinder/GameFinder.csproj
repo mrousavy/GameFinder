@@ -67,6 +67,9 @@
     <Compile Include="Finder\FinderView.xaml.cs">
       <DependentUpon>FinderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FriendChooser\FriendChooserView.xaml.cs">
+      <DependentUpon>FriendChooserView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FriendChooser\FriendChooserViewModel.cs" />
     <Compile Include="Game\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
@@ -93,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Finder\FinderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FriendChooser\FriendChooserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,6 +169,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="gong-wpf-dragdrop">
+      <Version>1.1.0</Version>
+    </PackageReference>
     <PackageReference Include="Jellyfish">
       <Version>1.0.37</Version>
     </PackageReference>

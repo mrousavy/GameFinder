@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:errorDialog="clr-namespace:GameFinder.ErrorDialog"
+    xmlns:friendChooser="clr-namespace:GameFinder.FriendChooser"
     xmlns:game="clr-namespace:GameFinder.Game"
     xmlns:loadingDialog="clr-namespace:GameFinder.LoadingDialog"
     xmlns:user="clr-namespace:GameFinder.User"
@@ -37,6 +38,10 @@
 
             <DataTemplate DataType="{x:Type game:GameViewModel}">
                 <game:GameView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type friendChooser:FriendChooserViewModel}">
+                <friendChooser:FriendChooserView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
