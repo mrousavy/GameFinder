@@ -163,6 +163,9 @@
     <PackageReference Include="SteamWebAPI2">
       <Version>4.0.8</Version>
     </PackageReference>
+    <PackageReference Include="System.Windows.Interactivity.WPF">
+      <Version>2.0.20525</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\DefaultAvatar.png" />

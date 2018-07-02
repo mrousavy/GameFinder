@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using GameFinder.ErrorDialog;
-using GameFinder.Game;
 using GameFinder.LoadingDialog;
 using GameFinder.Models;
 using GameFinder.User;
@@ -66,7 +63,7 @@ namespace GameFinder.Finder
         {
             SteamUser = message.SteamUser;
             SteamPlayer = message.SteamPlayer;
-            await LoadAsync();
+            await LoadAsync().ConfigureAwait(false);
         }
 
         private async Task LoadAsync()
@@ -101,48 +98,26 @@ namespace GameFinder.Finder
 
         private async Task<UserViewModel> GetUser(ulong steamId)
         {
-            var profile = await SteamUser.GetCommunityProfileAsync(steamId);
-            var gamesResponse = await SteamPlayer.GetOwnedGamesAsync(steamId, true, false);
-            var games = gamesResponse.Data.OwnedGames;
-
-            return ProfileToUser(profile, games);
+            var profile = await SteamUser.GetCommunityProfileAsync(steamId).ConfigureAwait(false);
+            return ProfileToUser(profile);
         }
 
-        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile,
-            IEnumerable<OwnedGameModel> ownedGames)
+        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile)
         {
             if (profile == null) return null;
 
             string url = Extensions.Valid(profile.CustomURL)
                 ? $"http://steamcommunity.com/id/{profile.CustomURL}"
                 : null;
-            var games = ownedGames?.Select(OwnedGameToGame);
 
-            return new UserViewModel
+            return new UserViewModel(profile.SteamID)
             {
                 AvatarUri = profile.Avatar,
                 RealName = profile.RealName,
                 Url = url,
                 Username = profile.Headline,
                 State = profile.StateMessage,
-                VisibilityState = (int) profile.VisibilityState,
-                Games = games
-            };
-        }
-
-        private static GameViewModel OwnedGameToGame(OwnedGameModel game)
-        {
-            if (game == null) return null;
-
-            string url = Extensions.Valid(game.ImgLogoUrl)
-                ? $"http://media.steampowered.com/steamcommunity/public/images/apps/{game.AppId}/{game.ImgLogoUrl}.jpg"
-                : null;
-
-            return new GameViewModel
-            {
-                IconUrl = url,
-                Name = game.Name,
-                Playtime = game.PlaytimeForever
+                VisibilityState = (int) profile.VisibilityState
             };
         }
     }

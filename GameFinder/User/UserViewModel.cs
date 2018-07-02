@@ -1,9 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GameFinder.Game;
 using Jellyfish;
+using Steam.Models.SteamCommunity;
+using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.User
 {
@@ -11,7 +15,7 @@ namespace GameFinder.User
     {
         private Uri _avatarUri;
 
-        private IEnumerable<GameViewModel> _games;
+        private ObservableCollection<GameViewModel> _games;
 
         private ICommand _openProfileCommand;
 
@@ -24,9 +28,19 @@ namespace GameFinder.User
 
         private int _visibilityState;
 
-        public UserViewModel()
+        private ulong _userId;
+
+        public UserViewModel(ulong userId)
         {
+            UserId = userId;
             OpenProfileCommand = new RelayCommand<string>(OpenProfileAction);
+            LoadGamesCommand = new RelayCommand(LoadGamesAction);
+        }
+
+        public ulong UserId
+        {
+            get => _userId;
+            set => Set(ref _userId, value);
         }
 
         public string Username
@@ -59,7 +73,7 @@ namespace GameFinder.User
             set => Set(ref _visibilityState, value);
         }
 
-        public IEnumerable<GameViewModel> Games
+        public ObservableCollection<GameViewModel> Games
         {
             get => _games;
             set => Set(ref _games, value);
@@ -77,6 +91,14 @@ namespace GameFinder.User
             set => Set(ref _openProfileCommand, value);
         }
 
+        private ICommand _loadGamesCommand;
+
+        public ICommand LoadGamesCommand
+        {
+            get => _loadGamesCommand;
+            set => Set(ref _loadGamesCommand, value);
+        }
+
         private static void OpenProfileAction(string url)
         {
             try
@@ -86,6 +108,45 @@ namespace GameFinder.User
             {
                 // could not open profile
             }
+        }
+
+        private async void LoadGamesAction(object o)
+        {
+            await LoadGamesAsync().ConfigureAwait(false);
+        }
+
+        public async Task LoadGamesAsync()
+        {
+            try
+            {
+                var player = new PlayerService(Session.ApiKey);
+                var gamesResponse = await player.GetOwnedGamesAsync(UserId, true, false);
+                var ownedGames = gamesResponse.Data.OwnedGames;
+                var games = ownedGames?.Select(OwnedGameToGame);
+
+                if (games != null)
+                    Games = new ObservableCollection<GameViewModel>(games);
+            } catch (Exception ex)
+            {
+                Debug.WriteLine($"Could not load games! {ex.Message}");
+            }
+        }
+
+        private static GameViewModel OwnedGameToGame(OwnedGameModel game)
+        {
+            if (game == null)
+                return null;
+
+            string url = Extensions.Valid(game.ImgLogoUrl)
+                ? $"http://media.steampowered.com/steamcommunity/public/images/apps/{game.AppId}/{game.ImgLogoUrl}.jpg"
+                : null;
+
+            return new GameViewModel
+            {
+                IconUrl = url,
+                Name = game.Name,
+                Playtime = game.PlaytimeForever
+            };
         }
     }
 }

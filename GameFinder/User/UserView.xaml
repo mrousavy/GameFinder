@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:GameFinder.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:GameFinder.User"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -25,72 +26,80 @@
         <BitmapImage x:Key="DefaultAvatar" UriSource="/Resources/DefaultAvatar.png" />
     </UserControl.Resources>
 
-    <md:Card
-        Margin="5"
-        HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch">
-        <Grid Margin="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadGamesCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
-            <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Width="40"
-                Height="40"
-                Margin="7"
-                Source="{Binding AvatarUri, Converter={StaticResource UrlToImageConverter}, FallbackValue={StaticResource DefaultAvatar}, TargetNullValue={StaticResource DefaultAvatar}}" />
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="15"
-                FontSize="20"
-                Text="{Binding Username, FallbackValue=Unknown}"
-                TextTrimming="CharacterEllipsis"
-                TextWrapping="Wrap"
-                ToolTip="{Binding RealName}" />
-            <Button
-                Grid.Row="0"
-                Grid.Column="2"
-                Width="30"
-                Height="30"
-                Margin="15"
-                Padding="-15"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Command="{Binding OpenProfileCommand}"
-                CommandParameter="{Binding Url}"
-                Content="{md:PackIcon Kind=Launch}"
-                Style="{StaticResource MaterialDesignFlatButton}"
-                ToolTip="Open Steam Profile in Browser" />
+    <md:TransitioningContent OpeningEffect="{md:TransitionEffect FadeIn}">
+        <md:Card
+            Margin="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <Grid Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                Margin="5"
-                FontSize="13"
-                Foreground="LightGray"
-                Text="{Binding State, FallbackValue=(unknown), StringFormat=({0})}"
-                TextTrimming="CharacterEllipsis"
-                TextWrapping="Wrap" />
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Width="40"
+                    Height="40"
+                    Margin="7"
+                    Source="{Binding AvatarUri, Converter={StaticResource UrlToImageConverter}, FallbackValue={StaticResource DefaultAvatar}, TargetNullValue={StaticResource DefaultAvatar}}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="15"
+                    FontSize="20"
+                    Text="{Binding Username, FallbackValue=Unknown}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap"
+                    ToolTip="{Binding RealName}" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Width="30"
+                    Height="30"
+                    Margin="15"
+                    Padding="-15"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Command="{Binding OpenProfileCommand}"
+                    CommandParameter="{Binding Url}"
+                    Content="{md:PackIcon Kind=Launch}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Open Steam Profile in Browser" />
 
-            <ScrollViewer
-                Grid.Row="2"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                HorizontalScrollBarVisibility="Disabled"
-                VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Games}" />
-            </ScrollViewer>
-        </Grid>
-    </md:Card>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="5"
+                    FontSize="13"
+                    Foreground="LightGray"
+                    Text="{Binding State, FallbackValue=(unknown), StringFormat=({0})}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+
+                <ScrollViewer
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Games}" />
+                </ScrollViewer>
+            </Grid>
+        </md:Card>
+    </md:TransitioningContent>
 </UserControl>
