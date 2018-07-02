@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using GameFinder.ErrorDialog;
+using GameFinder.Game;
 using GameFinder.LoadingDialog;
 using GameFinder.User;
 using Jellyfish;
@@ -56,12 +58,12 @@ namespace GameFinder.Finder
             set => Set(ref _friends, value);
         }
 
-        private void OnMessageReceived(FriendsLoadedStruct message)
+        private async void OnMessageReceived(FriendsLoadedStruct message)
         {
-            Load(message.You, message.Friends);
+            await Load(message.You, message.Friends);
         }
 
-        private void Load(PlayerSummaryModel you, IEnumerable<PlayerSummaryModel> profiles)
+        private async Task Load(PlayerSummaryModel you, IEnumerable<PlayerSummaryModel> profiles)
         {
             if (Session.SteamUser == null)
                 return;
@@ -69,8 +71,19 @@ namespace GameFinder.Finder
             DialogViewModel = new LoadingDialogViewModel();
             try
             {
-                Friends = new ObservableCollection<UserViewModel>(profiles.Select(SteamHelper.ProfileToUser));
+                // Load own profile
                 MyProfileViewModel = SteamHelper.ProfileToUser(you);
+                var myGames = await SteamHelper.LoadGamesAsync(MyProfileViewModel.UserId);
+                MyProfileViewModel.Games = new ObservableCollection<GameViewModel>(myGames);
+
+                // Load all friends
+                Friends = new ObservableCollection<UserViewModel>(profiles.Select(SteamHelper.ProfileToUser));
+                foreach (var friend in Friends)
+                {
+                    var games = await SteamHelper.LoadGamesAsync(friend.UserId);
+                    games = myGames.Intersect(games).ToList();
+                    friend.Games = new ObservableCollection<GameViewModel>(games);
+                }
 
                 IsDialogOpen = false;
             } catch (Exception ex)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using GameFinder.Game;
 using Jellyfish;
@@ -14,8 +13,6 @@ namespace GameFinder.User
         private Uri _avatarUri;
 
         private ObservableCollection<GameViewModel> _games;
-
-        private ICommand _loadGamesCommand;
 
         private ICommand _openProfileCommand;
 
@@ -34,7 +31,6 @@ namespace GameFinder.User
         {
             UserId = userId;
             OpenProfileCommand = new RelayCommand<string>(OpenProfileAction);
-            LoadGamesCommand = new RelayCommand(LoadGamesAction);
         }
 
         public ulong UserId
@@ -91,12 +87,6 @@ namespace GameFinder.User
             set => Set(ref _openProfileCommand, value);
         }
 
-        public ICommand LoadGamesCommand
-        {
-            get => _loadGamesCommand;
-            set => Set(ref _loadGamesCommand, value);
-        }
-
         private static void OpenProfileAction(string url)
         {
             try
@@ -108,31 +98,12 @@ namespace GameFinder.User
             }
         }
 
-        private async void LoadGamesAction(object o)
-        {
-            await LoadGamesAsync().ConfigureAwait(false);
-        }
-
-        public async Task LoadGamesAsync()
-        {
-            try
-            {
-                var games = await SteamHelper.LoadGamesAsync(UserId);
-                if (games != null)
-                    Games = new ObservableCollection<GameViewModel>(games);
-            } catch (Exception ex)
-            {
-                Debug.WriteLine($"Could not load games! {ex.Message}");
-            }
-        }
-
-
         public override bool Equals(object obj)
         {
             return obj is UserViewModel model &&
                    UserId == model.UserId;
         }
 
-        public override int GetHashCode() => -566744556 + UserId.GetHashCode();
+        public override int GetHashCode() => UserId.GetHashCode() - 566744556;
     }
 }
