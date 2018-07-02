@@ -1,2 +1,35 @@
-# GameFinder
-🎮 An application for finding games to play you and your friends have on Steam
+<p align="center">
+    <h1 align="center">GameFinder</h1>
+    <p align="center">
+        <a href='https://ko-fi.com/F1F8CLXG' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+    </p>
+    <blockquote align="center">
+    <p>🎮 An application for finding games to play you and your friends have on Steam</p>
+    </blockquote>
+</p>
+
+Ever felt like not knowing what to play even though you have thousands of games in your steam library? **GameFinder** finds matching games you and your friends have in common.
+
+### Features
+* Select friends to compare games with
+* View all games you and the selected friends have in common
+* Launch games directly from **GameFinder**
+
+<p align="center">
+    <img src="Images/demo.gif" alt="Demo GIF" width=800 />
+</p>
+
+### How to run
+##### Pre-compiled
+* Download the latest [release](https://github.com/mrousavy/GameFinder/releases/latest)
+* Unzip & Run `GameFinder.exe`
+
+##### Manually
+* Git clone this repository
+* Open `GameFinder.sln` in Visual Studio
+* Switch build configuration to `Release`
+* Build with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>
+* Run the generated `GameFinder.exe` in `bin/Release/`
+
+
+> Made with C# + WPF MVVM + [Material Design](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) + [Jellyfish](https://github.com/mrousavy/Jellyfish)
