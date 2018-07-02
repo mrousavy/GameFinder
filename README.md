@@ -1,7 +1,11 @@
 <p align="center">
+    <img src="Images/icon.png" width=70>
     <h1 align="center">GameFinder</h1>
     <p align="center">
         <a href='https://ko-fi.com/F1F8CLXG' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+    </p>
+    <p align="center">
+        <a href="https://github.com/mrousavy/GameFinder/releases/latest"><img src="https://img.shields.io/github/downloads/mrousavy/GameFinder/total.svg"></a>
     </p>
     <blockquote align="center">
     <p>🎮 An application for finding games to play you and your friends have on Steam</p>
@@ -32,4 +36,4 @@ Ever felt like not knowing what to play even though you have thousands of games 
 * Run the generated `GameFinder.exe` in `bin/Release/`
 
 
-> Made with C# + WPF MVVM + [Material Design](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) + [Jellyfish](https://github.com/mrousavy/Jellyfish)
+> Made with C# + WPF MVVM + [Material Design](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) + [Jellyfish](https://github.com/mrousavy/Jellyfish) | [Icon](http://www.iconarchive.com/show/enkel-icons-by-froyoshark/Steam-icon.html)
