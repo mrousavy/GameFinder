@@ -8,6 +8,6 @@ namespace GameFinder
         { }
 
         public string ApiKey { get; set; }
-        public long UserId { get; set; }
+        public ulong UserId { get; set; }
     }
 }

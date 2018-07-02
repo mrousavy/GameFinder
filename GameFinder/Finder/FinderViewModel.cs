@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using GameFinder.ErrorDialog;
 using GameFinder.LoadingDialog;
 using GameFinder.Models;
 using GameFinder.User;
 using Jellyfish;
+using Steam.Models.SteamCommunity;
 using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.Finder
@@ -29,6 +31,13 @@ namespace GameFinder.Finder
             set => Set(ref _isDialogOpen, value);
         }
 
+        private UserViewModel _myProfileViewModel;
+        public UserViewModel MyProfileViewModel
+        {
+            get => _myProfileViewModel;
+            set => Set(ref _myProfileViewModel, value);
+        }
+
         private ObservableCollection<UserViewModel> _friends;
         public ObservableCollection<UserViewModel> Friends
         {
@@ -45,13 +54,13 @@ namespace GameFinder.Finder
             feed.MessageReceived += OnMessageReceived;
         }
 
-        private void OnMessageReceived(LoggedInStruct message)
+        private async void OnMessageReceived(LoggedInStruct message)
         {
             SteamUser = message.SteamUser;
-            LoadFriends();
+            await LoadAsync();
         }
 
-        private async void LoadFriends()
+        private async Task LoadAsync()
         {
             if (SteamUser == null)
                 return;
@@ -64,18 +73,14 @@ namespace GameFinder.Finder
                 else
                     Friends.Clear();
 
-                var friendsListResponse = await SteamUser.GetFriendsListAsync((ulong) Session.UserId);
+                var me = await SteamUser.GetCommunityProfileAsync(Session.UserId);
+                MyProfileViewModel = ProfileToUser(me);
+
+                var friendsListResponse = await SteamUser.GetFriendsListAsync(Session.UserId);
                 foreach (var friend in friendsListResponse.Data)
                 {
                     var profile = await SteamUser.GetCommunityProfileAsync(friend.SteamId);
-                    var model = new UserViewModel
-                    {
-                        AvatarUri = profile.Avatar,
-                        RealName = profile.RealName,
-                        Url = $"http://steamcommunity.com/id/{profile.CustomURL}",
-                        Username = profile.Headline,
-                        State = profile.State
-                    };
+                    var model = ProfileToUser(profile);
                     Friends.Add(model);
                 }
 
@@ -84,6 +89,19 @@ namespace GameFinder.Finder
             {
                 DialogViewModel = new ErrorDialogViewModel($"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
             }
+        }
+
+        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile)
+        {
+            return new UserViewModel
+            {
+                AvatarUri = profile.Avatar,
+                RealName = profile.RealName,
+                Url = $"http://steamcommunity.com/id/{profile.CustomURL}",
+                Username = profile.Headline,
+                State = profile.State,
+                VisibilityState = (int) profile.VisibilityState
+            };
         }
     }
 }

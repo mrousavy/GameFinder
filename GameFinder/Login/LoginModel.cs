@@ -10,7 +10,7 @@ namespace GameFinder.Login
         public void Login(string apiKey, string userId)
         {
             Session.ApiKey = apiKey;
-            Session.UserId = long.Parse(userId);
+            Session.UserId = ulong.Parse(userId);
 
             var user = new SteamUser(apiKey);
             var feed = MessageFeed<LoggedInStruct>.Feed;

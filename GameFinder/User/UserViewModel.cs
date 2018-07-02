@@ -37,6 +37,13 @@ namespace GameFinder.User
             set => Set(ref _state, value);
         }
 
+        private int _visibilityState;
+        public int VisibilityState
+        {
+            get => _visibilityState;
+            set => Set(ref _visibilityState, value);
+        }
+
         private IEnumerable<OwnedGameModel> _games;
         public IEnumerable<OwnedGameModel> Games
         {

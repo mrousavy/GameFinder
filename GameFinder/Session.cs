@@ -13,7 +13,7 @@ namespace GameFinder
             get => Config.ApiKey;
             set => Config.ApiKey = value;
         }
-        public static long UserId
+        public static ulong UserId
         {
             get => Config.UserId;
             set => Config.UserId = value;
