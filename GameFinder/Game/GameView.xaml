@@ -26,14 +26,14 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
 
         <Image
             Grid.Row="0"
             Grid.Column="0"
-            Width="45"
-            Height="45"
+            Width="92"
+            Height="48"
             Margin="8"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -42,10 +42,10 @@
         <TextBlock
             Grid.Row="0"
             Grid.Column="1"
-            Margin="15"
+            Margin="8"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            FontSize="20"
+            FontSize="16"
             Text="{Binding Name, FallbackValue=Unknown}"
             TextTrimming="CharacterEllipsis"
             TextWrapping="Wrap" />
@@ -59,7 +59,7 @@
             VerticalAlignment="Top"
             FontSize="13"
             Foreground="LightGray"
-            Text="{Binding Playtime, FallbackValue=Playtime: 0:00, StringFormat=Playtime: {0}}"
+            Text="{Binding Playtime, FallbackValue=0:00, StringFormat=HH:mm}"
             TextTrimming="CharacterEllipsis"
             TextWrapping="Wrap" />
     </Grid>

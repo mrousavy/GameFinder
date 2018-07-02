@@ -97,7 +97,7 @@ namespace GameFinder.Finder
         private async Task<UserViewModel> GetUser(ulong steamId)
         {
             var profile = await SteamUser.GetCommunityProfileAsync(steamId);
-            var gamesResponse = await SteamPlayer.GetOwnedGamesAsync(steamId, false, true);
+            var gamesResponse = await SteamPlayer.GetOwnedGamesAsync(steamId, true, false);
             var games = gamesResponse.Data.OwnedGames;
 
             return ProfileToUser(profile, games);
@@ -126,9 +126,13 @@ namespace GameFinder.Finder
         {
             if (game == null) return null;
 
+            string url = Extensions.Valid(game.ImgLogoUrl)
+                ? $"http://media.steampowered.com/steamcommunity/public/images/apps/{game.AppId}/{game.ImgLogoUrl}.jpg"
+                : null;
+
             return new GameViewModel
             {
-                IconUrl = game.ImgLogoUrl,
+                IconUrl = url,
                 Name = game.Name,
                 Playtime = game.PlaytimeForever
             };
