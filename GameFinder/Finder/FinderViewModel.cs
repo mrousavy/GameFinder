@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Linq;
 using GameFinder.ErrorDialog;
 using GameFinder.LoadingDialog;
 using GameFinder.User;
@@ -22,9 +23,10 @@ namespace GameFinder.Finder
 
         public FinderViewModel()
         {
-            var feed = MessageFeed<bool>.Feed;
+            var feed = MessageFeed<FriendsLoadedStruct>.Feed;
             feed.MessageReceived += OnMessageReceived;
         }
+
 
         public object DialogViewModel
         {
@@ -54,12 +56,12 @@ namespace GameFinder.Finder
             set => Set(ref _friends, value);
         }
 
-        private async void OnMessageReceived(bool loggedIn)
+        private void OnMessageReceived(FriendsLoadedStruct message)
         {
-            await LoadAsync().ConfigureAwait(false);
+            Load(message.You, message.Friends);
         }
 
-        private async Task LoadAsync()
+        private void Load(SteamCommunityProfileModel you, IEnumerable<SteamCommunityProfileModel> profiles)
         {
             if (Session.SteamUser == null)
                 return;
@@ -67,19 +69,8 @@ namespace GameFinder.Finder
             DialogViewModel = new LoadingDialogViewModel();
             try
             {
-                if (Friends == null)
-                    Friends = new ObservableCollection<UserViewModel>();
-                else
-                    Friends.Clear();
-
-                MyProfileViewModel = await GetUser(Session.UserId);
-
-                var friendsListResponse = await Session.SteamUser.GetFriendsListAsync(Session.UserId);
-                foreach (var friend in friendsListResponse.Data)
-                {
-                    var model = await GetUser(friend.SteamId);
-                    Friends.Add(model);
-                }
+                Friends = new ObservableCollection<UserViewModel>(profiles.Select(ProfileToUser));
+                MyProfileViewModel = ProfileToUser(you);
 
                 IsDialogOpen = false;
             } catch (Exception ex)
@@ -87,12 +78,6 @@ namespace GameFinder.Finder
                 DialogViewModel = new ErrorDialogViewModel(
                     $"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
             }
-        }
-
-        private async Task<UserViewModel> GetUser(ulong steamId)
-        {
-            var profile = await Session.SteamUser.GetCommunityProfileAsync(steamId).ConfigureAwait(false);
-            return ProfileToUser(profile);
         }
 
         private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile)

@@ -67,10 +67,12 @@
     <Compile Include="Finder\FinderView.xaml.cs">
       <DependentUpon>FinderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FriendChooser\FriendChooserModel.cs" />
     <Compile Include="FriendChooser\FriendChooserView.xaml.cs">
       <DependentUpon>FriendChooserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FriendChooser\FriendChooserViewModel.cs" />
+    <Compile Include="FriendsLoadedStruct.cs" />
     <Compile Include="Game\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>

@@ -17,6 +17,9 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
+    <UserControl.DataContext>
+        <local:FriendChooserViewModel />
+    </UserControl.DataContext>
 
     <md:DialogHost DialogContent="{Binding DialogViewModel}" IsOpen="{Binding IsDialogOpen}">
         <Grid
@@ -69,6 +72,7 @@
                 Margin="5"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
+                Command="{Binding OkCommand}"
                 Content="Ok"
                 Style="{StaticResource MaterialDesignFlatButton}" />
         </Grid>
