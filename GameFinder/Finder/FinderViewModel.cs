@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using GameFinder.ErrorDialog;
+using GameFinder.Game;
 using GameFinder.LoadingDialog;
 using GameFinder.Models;
 using GameFinder.User;
@@ -46,6 +49,7 @@ namespace GameFinder.Finder
         }
 
         public ISteamUser SteamUser { get; set; }
+        public IPlayerService SteamPlayer { get; set; }
 
 
         public FinderViewModel()
@@ -57,6 +61,7 @@ namespace GameFinder.Finder
         private async void OnMessageReceived(LoggedInStruct message)
         {
             SteamUser = message.SteamUser;
+            SteamPlayer = message.SteamPlayer;
             await LoadAsync();
         }
 
@@ -72,15 +77,13 @@ namespace GameFinder.Finder
                     Friends = new ObservableCollection<UserViewModel>();
                 else
                     Friends.Clear();
-
-                var me = await SteamUser.GetCommunityProfileAsync(Session.UserId);
-                MyProfileViewModel = ProfileToUser(me);
+                
+                MyProfileViewModel = await GetUser(Session.UserId);
 
                 var friendsListResponse = await SteamUser.GetFriendsListAsync(Session.UserId);
                 foreach (var friend in friendsListResponse.Data)
                 {
-                    var profile = await SteamUser.GetCommunityProfileAsync(friend.SteamId);
-                    var model = ProfileToUser(profile);
+                    var model = await GetUser(friend.SteamId);
                     Friends.Add(model);
                 }
 
@@ -91,9 +94,21 @@ namespace GameFinder.Finder
             }
         }
 
-        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile)
+        private async Task<UserViewModel> GetUser(ulong steamId)
         {
+            var profile = await SteamUser.GetCommunityProfileAsync(steamId);
+            var gamesResponse = await SteamPlayer.GetOwnedGamesAsync(steamId, false, true);
+            var games = gamesResponse.Data.OwnedGames;
+
+            return ProfileToUser(profile, games);
+        }
+
+        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile, IEnumerable<OwnedGameModel> ownedGames)
+        {
+            if (profile == null) return null;
+
             string url = Extensions.Valid(profile.CustomURL) ? $"http://steamcommunity.com/id/{profile.CustomURL}" : null;
+            var games = ownedGames?.Select(OwnedGameToGame);
 
             return new UserViewModel
             {
@@ -102,7 +117,20 @@ namespace GameFinder.Finder
                 Url = url,
                 Username = profile.Headline,
                 State = profile.StateMessage,
-                VisibilityState = (int) profile.VisibilityState
+                VisibilityState = (int) profile.VisibilityState,
+                Games = games
+            };
+        }
+
+        private static GameViewModel OwnedGameToGame(OwnedGameModel game)
+        {
+            if (game == null) return null;
+
+            return new GameViewModel
+            {
+                IconUrl = game.ImgLogoUrl,
+                Name = game.Name,
+                Playtime = game.PlaytimeForever
             };
         }
     }

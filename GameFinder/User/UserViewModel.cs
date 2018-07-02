@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
+using GameFinder.Game;
 using Jellyfish;
-using Steam.Models.SteamCommunity;
 
 namespace GameFinder.User
 {
@@ -44,8 +44,8 @@ namespace GameFinder.User
             set => Set(ref _visibilityState, value);
         }
 
-        private IEnumerable<OwnedGameModel> _games;
-        public IEnumerable<OwnedGameModel> Games
+        private IEnumerable<GameViewModel> _games;
+        public IEnumerable<GameViewModel> Games
         {
             get => _games;
             set => Set(ref _games, value);

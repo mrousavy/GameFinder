@@ -1,12 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Jellyfish;
 
 namespace GameFinder.Game
 {
-    class GameViewModel
+    public class GameViewModel : ViewModel
     {
+
+        private string _iconUrl;
+        public string IconUrl
+        {
+            get => _iconUrl;
+            set => Set(ref _iconUrl, value);
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => Set(ref _name, value);
+        }
+
+        private TimeSpan _playtime;
+        public TimeSpan Playtime
+        {
+            get => _playtime;
+            set => Set(ref _playtime, value);
+        }
     }
 }

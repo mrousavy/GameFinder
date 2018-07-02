@@ -13,8 +13,9 @@ namespace GameFinder.Login
             Session.UserId = ulong.Parse(userId);
 
             var user = new SteamUser(apiKey);
+            var player = new PlayerService(apiKey);
             var feed = MessageFeed<LoggedInStruct>.Feed;
-            feed.Notify(new LoggedInStruct(user));
+            feed.Notify(new LoggedInStruct(user, player));
 
             Transitioner.MoveNextCommand.Execute(null, null);
         }

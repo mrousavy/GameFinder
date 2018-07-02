@@ -7,8 +7,11 @@
     xmlns:local="clr-namespace:GameFinder.User"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Width="300"
+    MinWidth="300"
+    MaxWidth="300"
     d:DesignHeight="450"
-    d:DesignWidth="400"
+    d:DesignWidth="300"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
     TextElement.FontSize="13"
@@ -52,6 +55,8 @@
                 Margin="15"
                 FontSize="20"
                 Text="{Binding Username, FallbackValue=Unknown}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="Wrap"
                 ToolTip="{Binding RealName}" />
             <Button
                 Grid.Row="0"
@@ -75,13 +80,18 @@
                 Margin="5"
                 FontSize="13"
                 Foreground="LightGray"
-                Text="{Binding State, FallbackValue=(unknown), StringFormat=({0})}" />
+                Text="{Binding State, FallbackValue=(unknown), StringFormat=({0})}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="Wrap" />
 
-            <ItemsControl
+            <ScrollViewer
                 Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                ItemsSource="{Binding Games}" />
+                HorizontalScrollBarVisibility="Disabled"
+                VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Games}" />
+            </ScrollViewer>
         </Grid>
     </md:Card>
 </UserControl>

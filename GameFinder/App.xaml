@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:errorDialog="clr-namespace:GameFinder.ErrorDialog"
+    xmlns:game="clr-namespace:GameFinder.Game"
     xmlns:loadingDialog="clr-namespace:GameFinder.LoadingDialog"
     xmlns:user="clr-namespace:GameFinder.User"
     Exit="OnAppExit"
@@ -27,6 +28,10 @@
 
             <DataTemplate DataType="{x:Type user:UserViewModel}">
                 <user:UserView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type game:GameViewModel}">
+                <game:GameView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
