@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using GameFinder.ErrorDialog;
+using GameFinder.LoadingDialog;
 using Jellyfish;
 
 namespace GameFinder.Login
@@ -31,7 +32,11 @@ namespace GameFinder.Login
         public object DialogViewModel
         {
             get => _dialogViewModel;
-            set => Set(ref _dialogViewModel, value);
+            set
+            {
+                Set(ref _dialogViewModel, value);
+                IsDialogOpen = value != null;
+            }
         }
 
         private bool _isDialogOpen;
@@ -61,12 +66,15 @@ namespace GameFinder.Login
         {
             try
             {
+                DialogViewModel = new LoadingDialogViewModel();
+
                 Model.Login(ApiKey, UserId);
+
+                IsDialogOpen = false;
             } catch
             {
                 DialogViewModel = new ErrorDialogViewModel("The given API Key or User ID is invalid!\n\r" +
                                                            "Please check your inputs and try again!");
-                IsDialogOpen = true;
             }
         }
     }

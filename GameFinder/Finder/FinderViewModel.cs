@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using GameFinder.ErrorDialog;
+using GameFinder.LoadingDialog;
 using GameFinder.Models;
 using GameFinder.User;
 using Jellyfish;
@@ -13,7 +14,12 @@ namespace GameFinder.Finder
         public object DialogViewModel
         {
             get => _dialogViewModel;
-            set => Set(ref _dialogViewModel, value);
+            set
+            {
+                Set(ref _dialogViewModel, value);
+                if (value != null)
+                    IsDialogOpen = true;
+            }
         }
 
         private bool _isDialogOpen;
@@ -51,12 +57,15 @@ namespace GameFinder.Finder
         {
             try
             {
+                DialogViewModel = new LoadingDialogViewModel();
+
                 var friends = await Model.GetFriends(Session.UserId);
                 Friends = new ObservableCollection<UserViewModel>(friends);
+
+                IsDialogOpen = false;
             } catch (Exception ex)
             {
                 DialogViewModel = new ErrorDialogViewModel($"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
-                IsDialogOpen = true;
             }
         }
     }
