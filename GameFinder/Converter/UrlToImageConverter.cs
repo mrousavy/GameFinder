@@ -24,7 +24,6 @@ namespace GameFinder.Converter
                     break;
                 default:
                     throw new ArgumentException($"Invalid type! {value}");
-
             }
 
             var bitmap = new BitmapImage();

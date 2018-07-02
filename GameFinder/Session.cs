@@ -1,22 +1,26 @@
-﻿using Jellyfish;
-using SteamWebAPI2.Interfaces;
-
-namespace GameFinder
+﻿namespace GameFinder
 {
     public static class Session
     {
         public static Config Config { get; set; }
 
-
         public static string ApiKey
         {
-            get => Config.ApiKey;
-            set => Config.ApiKey = value;
+            get => Config?.ApiKey;
+            set
+            {
+                if (Config != null)
+                    Config.ApiKey = value;
+            }
         }
         public static ulong UserId
         {
-            get => Config.UserId;
-            set => Config.UserId = value;
+            get => Config?.UserId ?? 0;
+            set
+            {
+                if (Config != null)
+                    Config.UserId = value;
+            }
         }
     }
 }

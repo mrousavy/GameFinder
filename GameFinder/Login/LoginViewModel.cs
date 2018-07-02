@@ -53,12 +53,13 @@ namespace GameFinder.Login
             Model = new LoginModel();
             LoginCommand = new RelayCommand(LoginAction);
 
-            ApiKey = Session.ApiKey;
-            UserId = Session.UserId.ToString();
-
-            if (!string.IsNullOrWhiteSpace(Session.ApiKey) && Session.UserId > 0)
+            if (Session.Config != null)
             {
-                LoginAction(null);
+                ApiKey = Session.ApiKey;
+                UserId = Session.UserId.ToString();
+
+                if (!string.IsNullOrWhiteSpace(Session.ApiKey) && Session.UserId > 0)
+                    LoginAction(null);
             }
         }
 
