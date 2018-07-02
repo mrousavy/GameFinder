@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Input;
 using Jellyfish;
 using Steam.Models.SteamCommunity;
 
@@ -28,6 +30,13 @@ namespace GameFinder.User
             set => Set(ref _url, value);
         }
 
+        private string _state;
+        public string State
+        {
+            get => _state;
+            set => Set(ref _state, value);
+        }
+
         private IEnumerable<OwnedGameModel> _games;
         public IEnumerable<OwnedGameModel> Games
         {
@@ -40,6 +49,29 @@ namespace GameFinder.User
         {
             get => _avatarUri;
             set => Set(ref _avatarUri, value);
+        }
+
+        private ICommand _openProfileCommand;
+        public ICommand OpenProfileCommand
+        {
+            get => _openProfileCommand;
+            set => Set(ref _openProfileCommand, value);
+        }
+
+        public UserViewModel()
+        {
+            OpenProfileCommand = new RelayCommand(OpenProfileAction);
+        }
+
+        private void OpenProfileAction(object o)
+        {
+            try
+            {
+                Process.Start(Url);
+            } catch
+            {
+                // could not open profile
+            }
         }
     }
 }

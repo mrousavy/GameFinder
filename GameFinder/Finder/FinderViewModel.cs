@@ -5,6 +5,7 @@ using GameFinder.LoadingDialog;
 using GameFinder.Models;
 using GameFinder.User;
 using Jellyfish;
+using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.Finder
 {
@@ -17,8 +18,7 @@ namespace GameFinder.Finder
             set
             {
                 Set(ref _dialogViewModel, value);
-                if (value != null)
-                    IsDialogOpen = true;
+                IsDialogOpen = value != null;
             }
         }
 
@@ -36,31 +36,48 @@ namespace GameFinder.Finder
             set => Set(ref _friends, value);
         }
 
-        public FinderModel Model { get; set; }
+        public ISteamUser SteamUser { get; set; }
 
 
         public FinderViewModel()
         {
-            Model = new FinderModel();
-
             var feed = MessageFeed<LoggedInStruct>.Feed;
             feed.MessageReceived += OnMessageReceived;
         }
 
         private void OnMessageReceived(LoggedInStruct message)
         {
-            Model.SteamUser = message.SteamUser;
+            SteamUser = message.SteamUser;
             LoadFriends();
         }
 
         private async void LoadFriends()
         {
+            if (SteamUser == null)
+                return;
+
+            DialogViewModel = new LoadingDialogViewModel();
             try
             {
-                DialogViewModel = new LoadingDialogViewModel();
+                if (Friends == null)
+                    Friends = new ObservableCollection<UserViewModel>();
+                else
+                    Friends.Clear();
 
-                var friends = await Model.GetFriends(Session.UserId);
-                Friends = new ObservableCollection<UserViewModel>(friends);
+                var friendsListResponse = await SteamUser.GetFriendsListAsync((ulong) Session.UserId);
+                foreach (var friend in friendsListResponse.Data)
+                {
+                    var profile = await SteamUser.GetCommunityProfileAsync(friend.SteamId);
+                    var model = new UserViewModel
+                    {
+                        AvatarUri = profile.Avatar,
+                        RealName = profile.RealName,
+                        Url = $"http://steamcommunity.com/id/{profile.CustomURL}",
+                        Username = profile.Headline,
+                        State = profile.State
+                    };
+                    Friends.Add(model);
+                }
 
                 IsDialogOpen = false;
             } catch (Exception ex)

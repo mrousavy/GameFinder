@@ -17,61 +17,70 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <UserControl.DataContext>
-        <local:UserViewModel />
-    </UserControl.DataContext>
     <UserControl.Resources>
         <converter:UrlToImageConverter x:Key="UrlToImageConverter" />
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <md:Card Margin="5">
+        <Grid Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
 
-        <Image
-            Grid.Row="0"
-            Grid.Column="0"
-            Width="40"
-            Height="40"
-            Margin="7"
-            Source="{Binding AvatarUri, Converter={StaticResource UrlToImageConverter}}" />
-        <TextBlock
-            Grid.Row="0"
-            Grid.Column="1"
-            Margin="15"
-            FontSize="20"
-            Text="{Binding Username, FallbackValue=Unknown}" />
-        <Button
-            Grid.Row="0"
-            Grid.Column="2"
-            Width="30"
-            Height="30"
-            Margin="15"
-            Padding="-15"
-            Content="{md:PackIcon Kind=Launch}"
-            Style="{StaticResource MaterialDesignFlatButton}"
-            ToolTip="Open Steam Profile in Browser" />
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="40"
+                Height="40"
+                Margin="7"
+                Source="{Binding AvatarUri, Converter={StaticResource UrlToImageConverter}}" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="15"
+                FontSize="20"
+                Text="{Binding Username, FallbackValue=Unknown}" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Width="30"
+                Height="30"
+                Margin="15"
+                Padding="-15"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding OpenProfileCommand}"
+                Content="{md:PackIcon Kind=Launch}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Open Steam Profile in Browser" />
 
-        <TextBlock
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="5"
-            FontSize="14"
-            Text="{Binding RealName}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="5"
+                FontSize="14"
+                Text="{Binding State}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="5"
+                FontSize="15"
+                Text="{Binding RealName}" />
 
-        <ItemsControl
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            ItemsSource="{Binding Games}" />
-    </Grid>
+
+            <ItemsControl
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                ItemsSource="{Binding Games}" />
+        </Grid>
+    </md:Card>
 </UserControl>

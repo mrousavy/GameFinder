@@ -67,9 +67,7 @@ namespace GameFinder.Login
             try
             {
                 DialogViewModel = new LoadingDialogViewModel();
-
                 Model.Login(ApiKey, UserId);
-
                 IsDialogOpen = false;
             } catch
             {
