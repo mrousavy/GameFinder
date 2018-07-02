@@ -1,4 +1,5 @@
-﻿using GameFinder.Game;
+﻿using System;
+using GameFinder.Game;
 using Steam.Models.SteamCommunity;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +36,15 @@ namespace GameFinder
             };
         }
 
-        public static Task<SteamCommunityProfileModel> GetProfile(ulong steamId) =>
-            Session.SteamUser.GetCommunityProfileAsync(steamId);
-
-        public static async Task<IList<SteamCommunityProfileModel>> GetFriends()
+        public static async Task<PlayerSummaryModel> GetProfile(ulong steamId)
         {
-            IList<SteamCommunityProfileModel> friends = new List<SteamCommunityProfileModel>();
+            var response = await Session.SteamUser.GetPlayerSummaryAsync(steamId);
+            return response.Data;
+        }
+
+        public static async Task<IList<PlayerSummaryModel>> GetFriends()
+        {
+            IList<PlayerSummaryModel> friends = new List<PlayerSummaryModel>();
 
             var friendsListResponse = await Session.SteamUser.GetFriendsListAsync(Session.UserId).ConfigureAwait(false);
             foreach (var friend in friendsListResponse.Data)
@@ -52,35 +56,30 @@ namespace GameFinder
             return friends;
         }
 
-        public static UserSmallViewModel ProfileToUserSmall(SteamCommunityProfileModel profile)
+        public static UserSmallViewModel ProfileToUserSmall(PlayerSummaryModel profile)
         {
             if (profile == null)
                 return null;
 
-            return new UserSmallViewModel(profile.SteamID)
+            return new UserSmallViewModel(profile.SteamId)
             {
-                AvatarUri = profile.Avatar,
-                Username = profile.RealName
+                AvatarUri = new Uri(profile.AvatarUrl, UriKind.Absolute),
+                Username = profile.Nickname
             };
         }
 
-        public static UserViewModel ProfileToUser(SteamCommunityProfileModel profile)
+        public static UserViewModel ProfileToUser(PlayerSummaryModel profile)
         {
             if (profile == null)
                 return null;
 
-            string url = Extensions.Valid(profile.CustomURL)
-                ? $"http://steamcommunity.com/id/{profile.CustomURL}"
-                : null;
-
-            return new UserViewModel(profile.SteamID)
+            return new UserViewModel(profile.SteamId)
             {
-                AvatarUri = profile.Avatar,
+                AvatarUri = new Uri(profile.AvatarUrl, UriKind.Absolute),
                 RealName = profile.RealName,
-                Url = url,
-                Username = profile.RealName,
-                State = profile.StateMessage,
-                VisibilityState = (int) profile.VisibilityState
+                Url = profile.ProfileUrl,
+                Username = profile.Nickname,
+                State = profile.UserStatus
             };
         }
     }

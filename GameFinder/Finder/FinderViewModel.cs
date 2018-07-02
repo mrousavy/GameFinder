@@ -61,7 +61,7 @@ namespace GameFinder.Finder
             Load(message.You, message.Friends);
         }
 
-        private void Load(SteamCommunityProfileModel you, IEnumerable<SteamCommunityProfileModel> profiles)
+        private void Load(PlayerSummaryModel you, IEnumerable<PlayerSummaryModel> profiles)
         {
             if (Session.SteamUser == null)
                 return;

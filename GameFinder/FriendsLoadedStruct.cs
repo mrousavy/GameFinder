@@ -6,13 +6,13 @@ namespace GameFinder
 {
     public struct FriendsLoadedStruct
     {
-        public FriendsLoadedStruct(IEnumerable<SteamCommunityProfileModel> friends, SteamCommunityProfileModel you)
+        public FriendsLoadedStruct(IEnumerable<PlayerSummaryModel> friends, PlayerSummaryModel you)
         {
             Friends = friends ?? throw new ArgumentNullException(nameof(friends));
             You = you ?? throw new ArgumentNullException(nameof(you));
         }
 
-        public IEnumerable<SteamCommunityProfileModel> Friends { get; }
-        public SteamCommunityProfileModel You { get; }
+        public IEnumerable<PlayerSummaryModel> Friends { get; }
+        public PlayerSummaryModel You { get; }
     }
 }

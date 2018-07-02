@@ -21,7 +21,7 @@ namespace GameFinder.User
 
         private string _realName;
 
-        private string _state;
+        private UserStatus _state;
 
         private string _url;
 
@@ -61,7 +61,7 @@ namespace GameFinder.User
             set => Set(ref _url, value);
         }
 
-        public string State
+        public UserStatus State
         {
             get => _state;
             set => Set(ref _state, value);

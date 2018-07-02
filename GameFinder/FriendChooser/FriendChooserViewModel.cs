@@ -73,7 +73,7 @@ namespace GameFinder.FriendChooser
 
             var feed = MessageFeed<FriendsLoadedStruct>.Feed;
 
-            IList<SteamCommunityProfileModel> profiles = new List<SteamCommunityProfileModel>();
+            IList<PlayerSummaryModel> profiles = new List<PlayerSummaryModel>();
             foreach (var friend in ChosenFriends)
             {
                 var profile = await SteamHelper.GetProfile(friend.UserId);

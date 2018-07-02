@@ -10,7 +10,6 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     Width="300"
     MinWidth="300"
-    MaxWidth="300"
     d:DesignHeight="450"
     d:DesignWidth="300"
     Background="{DynamicResource MaterialDesignPaper}"
@@ -45,7 +44,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" MaxWidth="200" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
