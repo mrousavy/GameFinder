@@ -85,6 +85,7 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Session.cs" />
+    <Compile Include="SteamHelper.cs" />
     <Compile Include="UserSmall\UserSmallView.xaml.cs">
       <DependentUpon>UserSmallView.xaml</DependentUpon>
     </Compile>

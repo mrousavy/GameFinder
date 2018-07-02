@@ -69,8 +69,8 @@ namespace GameFinder.Finder
             DialogViewModel = new LoadingDialogViewModel();
             try
             {
-                Friends = new ObservableCollection<UserViewModel>(profiles.Select(ProfileToUser));
-                MyProfileViewModel = ProfileToUser(you);
+                Friends = new ObservableCollection<UserViewModel>(profiles.Select(SteamHelper.ProfileToUser));
+                MyProfileViewModel = SteamHelper.ProfileToUser(you);
 
                 IsDialogOpen = false;
             } catch (Exception ex)
@@ -78,25 +78,6 @@ namespace GameFinder.Finder
                 DialogViewModel = new ErrorDialogViewModel(
                     $"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
             }
-        }
-
-        private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile)
-        {
-            if (profile == null) return null;
-
-            string url = Extensions.Valid(profile.CustomURL)
-                ? $"http://steamcommunity.com/id/{profile.CustomURL}"
-                : null;
-
-            return new UserViewModel(profile.SteamID)
-            {
-                AvatarUri = profile.Avatar,
-                RealName = profile.RealName,
-                Url = url,
-                Username = profile.Headline,
-                State = profile.StateMessage,
-                VisibilityState = (int) profile.VisibilityState
-            };
         }
     }
 }

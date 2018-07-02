@@ -69,14 +69,14 @@ namespace GameFinder.FriendChooser
 
         private async void OkAction(object o)
         {
-            var you = await FriendChooserModel.GetProfile(Session.UserId);
+            var you = await SteamHelper.GetProfile(Session.UserId);
 
             var feed = MessageFeed<FriendsLoadedStruct>.Feed;
 
             IList<SteamCommunityProfileModel> profiles = new List<SteamCommunityProfileModel>();
             foreach (var friend in ChosenFriends)
             {
-                var profile = await FriendChooserModel.GetProfile(friend.UserId);
+                var profile = await SteamHelper.GetProfile(friend.UserId);
                 profiles.Add(profile);
             }
 
@@ -98,9 +98,9 @@ namespace GameFinder.FriendChooser
             DialogViewModel = new LoadingDialogViewModel();
             try
             {
-                var friends = await FriendChooserModel.GetFriends();
+                var friends = await SteamHelper.GetFriends();
                 AllFriends =
-                    new ObservableCollection<UserSmallViewModel>(friends.Select(FriendChooserModel.ProfileToUser));
+                    new ObservableCollection<UserSmallViewModel>(friends.Select(SteamHelper.ProfileToUserSmall));
 
                 IsDialogOpen = false;
             } catch (Exception ex)

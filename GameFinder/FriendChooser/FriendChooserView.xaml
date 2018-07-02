@@ -7,8 +7,8 @@
     xmlns:local="clr-namespace:GameFinder.FriendChooser"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    d:DesignHeight="450"
-    d:DesignWidth="500"
+    d:DesignHeight="550"
+    d:DesignWidth="800"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
     TextElement.FontSize="13"
@@ -49,7 +49,7 @@
             <ListView
                 Grid.Row="1"
                 Grid.Column="0"
-                MinWidth="100"
+                Width="316"
                 MinHeight="50"
                 Margin="15"
                 dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"
@@ -60,7 +60,7 @@
             <ListView
                 Grid.Row="1"
                 Grid.Column="1"
-                MinWidth="100"
+                Width="316"
                 MinHeight="50"
                 Margin="15"
                 dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"

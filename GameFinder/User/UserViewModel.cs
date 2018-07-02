@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GameFinder.Game;
@@ -118,10 +117,7 @@ namespace GameFinder.User
         {
             try
             {
-                var gamesResponse = await Session.SteamPlayer.GetOwnedGamesAsync(UserId, true, false);
-                var ownedGames = gamesResponse.Data.OwnedGames;
-                var games = ownedGames?.Select(OwnedGameToGame);
-
+                var games = await SteamHelper.LoadGamesAsync(UserId);
                 if (games != null)
                     Games = new ObservableCollection<GameViewModel>(games);
             } catch (Exception ex)
