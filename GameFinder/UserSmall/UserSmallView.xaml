@@ -21,10 +21,6 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <converter:UrlToImageConverter x:Key="UrlToImageConverter" />
-        <BitmapImage x:Key="DefaultAvatar" UriSource="/Resources/DefaultAvatar.png" />
-    </UserControl.Resources>
 
     <md:TransitioningContent OpeningEffect="{md:TransitionEffect FadeIn}">
         <md:Card

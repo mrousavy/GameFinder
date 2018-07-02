@@ -1,5 +1,4 @@
-﻿using System;
-using Jellyfish;
+﻿using Jellyfish;
 
 namespace GameFinder.Game
 {
@@ -8,8 +7,6 @@ namespace GameFinder.Game
         private string _iconUrl;
 
         private string _name;
-
-        private TimeSpan _playtime;
 
         public string IconUrl
         {
@@ -21,12 +18,6 @@ namespace GameFinder.Game
         {
             get => _name;
             set => Set(ref _name, value);
-        }
-
-        public TimeSpan Playtime
-        {
-            get => _playtime;
-            set => Set(ref _playtime, value);
         }
     }
 }

@@ -52,6 +52,7 @@
                 MinWidth="100"
                 MinHeight="50"
                 Margin="15"
+                dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"
                 dd:DragDrop.IsDragSource="True"
                 dd:DragDrop.IsDropTarget="True"
                 ItemsSource="{Binding AllFriends}" />
@@ -62,6 +63,7 @@
                 MinWidth="100"
                 MinHeight="50"
                 Margin="15"
+                dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"
                 dd:DragDrop.IsDragSource="True"
                 dd:DragDrop.IsDropTarget="True"
                 ItemsSource="{Binding ChosenFriends}" />

@@ -142,8 +142,7 @@ namespace GameFinder.User
             return new GameViewModel
             {
                 IconUrl = url,
-                Name = game.Name,
-                Playtime = game.PlaytimeForever
+                Name = game.Name
             };
         }
     }
