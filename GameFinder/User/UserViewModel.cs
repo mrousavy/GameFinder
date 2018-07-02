@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Jellyfish;
 using Steam.Models.SteamCommunity;
 
@@ -31,15 +29,14 @@ namespace GameFinder.User
         }
 
         private IEnumerable<OwnedGameModel> _games;
-
         public IEnumerable<OwnedGameModel> Games
         {
             get => _games;
             set => Set(ref _games, value);
         }
 
-        private string _avatarUri;
-        public string AvatarUri
+        private Uri _avatarUri;
+        public Uri AvatarUri
         {
             get => _avatarUri;
             set => Set(ref _avatarUri, value);

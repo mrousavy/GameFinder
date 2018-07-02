@@ -153,5 +153,8 @@
       <Version>4.0.8</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LoadingDialog\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

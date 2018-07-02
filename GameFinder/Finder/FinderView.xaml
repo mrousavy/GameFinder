@@ -25,20 +25,17 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="0"
-                Grid.ColumnSpan="4"
+                Grid.ColumnSpan="2"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <md:PackIcon
@@ -56,6 +53,30 @@
                     Text="Game Finder" />
             </StackPanel>
 
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Width="30"
+                Height="30"
+                Margin="5"
+                Padding="-15"
+                Command="{x:Static md:Transitioner.MovePreviousCommand}"
+                Content="{md:PackIcon Kind=Logout}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Sign out" />
+
+
+            <ItemsControl
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                ItemsSource="{Binding Friends}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </Grid>
     </md:DialogHost>
 </UserControl>

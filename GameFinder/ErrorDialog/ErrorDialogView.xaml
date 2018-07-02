@@ -46,7 +46,7 @@
             Grid.Row="0"
             Grid.Column="1"
             Margin="5"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Center"
             FontSize="20"
             Text="An error occured!" />
@@ -55,12 +55,18 @@
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-            Margin="5"
-            Text="{Binding ErrorText}" />
+            Margin="15"
+            Text="{Binding ErrorText}"
+            TextTrimming="CharacterEllipsis"
+            TextWrapping="Wrap" />
 
         <Button
             Grid.Row="2"
             Grid.Column="2"
+            Width="70"
+            Margin="5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
             Command="{x:Static md:DialogHost.CloseDialogCommand}"
             Content="Close"
             Style="{StaticResource MaterialDesignFlatButton}" />

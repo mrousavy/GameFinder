@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using GameFinder.ErrorDialog;
 using GameFinder.Models;
+using GameFinder.User;
 using Jellyfish;
-using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.Finder
 {
@@ -21,19 +23,41 @@ namespace GameFinder.Finder
             set => Set(ref _isDialogOpen, value);
         }
 
-        public ISteamUser SteamUser { get; set; }
+        private ObservableCollection<UserViewModel> _friends;
+        public ObservableCollection<UserViewModel> Friends
+        {
+            get => _friends;
+            set => Set(ref _friends, value);
+        }
+
+        public FinderModel Model { get; set; }
 
 
         public FinderViewModel()
         {
+            Model = new FinderModel();
+
             var feed = MessageFeed<LoggedInStruct>.Feed;
             feed.MessageReceived += OnMessageReceived;
         }
 
-
         private void OnMessageReceived(LoggedInStruct message)
         {
-            SteamUser = message.SteamUser;
+            Model.SteamUser = message.SteamUser;
+            LoadFriends();
+        }
+
+        private async void LoadFriends()
+        {
+            try
+            {
+                var friends = await Model.GetFriends(Session.UserId);
+                Friends = new ObservableCollection<UserViewModel>(friends);
+            } catch (Exception ex)
+            {
+                DialogViewModel = new ErrorDialogViewModel($"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
+                IsDialogOpen = true;
+            }
         }
     }
 }
