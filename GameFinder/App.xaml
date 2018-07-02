@@ -6,6 +6,7 @@
     xmlns:game="clr-namespace:GameFinder.Game"
     xmlns:loadingDialog="clr-namespace:GameFinder.LoadingDialog"
     xmlns:user="clr-namespace:GameFinder.User"
+    xmlns:userSmall="clr-namespace:GameFinder.UserSmall"
     Exit="OnAppExit"
     Startup="OnAppStartup"
     StartupUri="Main/MainWindow.xaml">
@@ -28,6 +29,10 @@
 
             <DataTemplate DataType="{x:Type user:UserViewModel}">
                 <user:UserView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type userSmall:UserSmallViewModel}">
+                <userSmall:UserSmallView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type game:GameViewModel}">

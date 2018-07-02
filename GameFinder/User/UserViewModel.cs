@@ -7,7 +7,6 @@ using System.Windows.Input;
 using GameFinder.Game;
 using Jellyfish;
 using Steam.Models.SteamCommunity;
-using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.User
 {
