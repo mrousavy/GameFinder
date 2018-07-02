@@ -1,8 +1,6 @@
 ﻿using System.Windows.Input;
 using GameFinder.ErrorDialog;
 using Jellyfish;
-using MaterialDesignThemes.Wpf.Transitions;
-using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.Login
 {
@@ -43,8 +41,11 @@ namespace GameFinder.Login
             set => Set(ref _isDialogOpen, value);
         }
 
+        public LoginModel Model { get; }
+
         public LoginViewModel()
         {
+            Model = new LoginModel();
             LoginCommand = new RelayCommand(LoginAction);
 
             ApiKey = Session.ApiKey;
@@ -60,10 +61,7 @@ namespace GameFinder.Login
         {
             try
             {
-                Session.ApiKey = ApiKey;
-                Session.UserId = long.Parse(UserId);
-                Session.SteamUser = new SteamUser(ApiKey);
-                Transitioner.MoveNextCommand.Execute(null, null);
+                Model.Login(ApiKey, UserId);
             } catch
             {
                 DialogViewModel = new ErrorDialogViewModel("The given API Key or User ID is invalid!\n\r" +

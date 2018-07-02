@@ -18,6 +18,5 @@ namespace GameFinder
             get => Config.UserId;
             set => Config.UserId = value;
         }
-        public static ISteamUser SteamUser { get; set; }
     }
 }
