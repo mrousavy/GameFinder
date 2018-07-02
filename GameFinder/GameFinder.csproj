@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="FriendChooser\FriendChooserViewModel.cs" />
     <Compile Include="FriendsLoadedStruct.cs" />
+    <Compile Include="GameEqualityComparer.cs" />
     <Compile Include="Game\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
@@ -86,6 +87,7 @@
     </Compile>
     <Compile Include="Session.cs" />
     <Compile Include="SteamHelper.cs" />
+    <Compile Include="SteamProfile.cs" />
     <Compile Include="UserSmall\UserSmallView.xaml.cs">
       <DependentUpon>UserSmallView.xaml</DependentUpon>
     </Compile>

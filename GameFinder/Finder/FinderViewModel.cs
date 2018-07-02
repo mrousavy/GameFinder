@@ -63,7 +63,7 @@ namespace GameFinder.Finder
             await Load(message.You, message.Friends);
         }
 
-        private async Task Load(PlayerSummaryModel you, IEnumerable<PlayerSummaryModel> profiles)
+        private async Task Load(PlayerSummaryModel you, IList<PlayerSummaryModel> profiles)
         {
             if (Session.SteamUser == null)
                 return;
@@ -71,18 +71,35 @@ namespace GameFinder.Finder
             DialogViewModel = new LoadingDialogViewModel();
             try
             {
+                // Load mutual games
+                var users = new List<SteamProfile>();
+                users.AddRange(profiles.Select(p => new SteamProfile(p.SteamId)));
+                users.Add(new SteamProfile(you.SteamId));
+
+                foreach (var user in users)
+                {
+                    user.Games = await SteamHelper.LoadGamesAsync(user.SteamId);
+                }
+
+                var equalityComparer = new GameEqualityComparer();
+                var mutualGames = users
+                    .SelectMany(x => x.Games)
+                    .Where(game => users.All(friend => friend.Games.Any(friendGame => friendGame.AppId == game.AppId)))
+                    .Distinct(equalityComparer)
+                    .ToList();
+                var gameViewModels = mutualGames.Select(SteamHelper.OwnedGameToGame);
+                var games = new ObservableCollection<GameViewModel>(gameViewModels);
+
+
                 // Load own profile
                 MyProfileViewModel = SteamHelper.ProfileToUser(you);
-                var myGames = await SteamHelper.LoadGamesAsync(MyProfileViewModel.UserId);
-                MyProfileViewModel.Games = new ObservableCollection<GameViewModel>(myGames);
+                MyProfileViewModel.Games = games;
 
                 // Load all friends
                 Friends = new ObservableCollection<UserViewModel>(profiles.Select(SteamHelper.ProfileToUser));
-                foreach (var friend in Friends)
+                foreach(var friend in Friends)
                 {
-                    var games = await SteamHelper.LoadGamesAsync(friend.UserId);
-                    games = myGames.Intersect(games).ToList();
-                    friend.Games = new ObservableCollection<GameViewModel>(games);
+                    friend.Games = games;
                 }
 
                 IsDialogOpen = false;

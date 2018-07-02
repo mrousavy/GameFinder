@@ -12,15 +12,15 @@ namespace GameFinder
     public static class SteamHelper
     {
 
-        public static async Task<IList<GameViewModel>> LoadGamesAsync(ulong userId)
+        public static async Task<IList<OwnedGameModel>> LoadGamesAsync(ulong userId)
         {
             var gamesResponse = await Session.SteamPlayer.GetOwnedGamesAsync(userId, true, false);
-            var ownedGames = gamesResponse.Data.OwnedGames;
-            var games = ownedGames.Select(OwnedGameToGame);
-            return games.ToList();
+            return gamesResponse.Data.OwnedGames.ToList();
+            //var games = ownedGames.Select(OwnedGameToGame);
+            //return games.ToList();
         }
 
-        private static GameViewModel OwnedGameToGame(OwnedGameModel game)
+        public static GameViewModel OwnedGameToGame(OwnedGameModel game)
         {
             if (game == null)
                 return null;
