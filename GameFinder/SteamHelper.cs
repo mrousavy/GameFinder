@@ -29,7 +29,7 @@ namespace GameFinder
                 ? $"http://media.steampowered.com/steamcommunity/public/images/apps/{game.AppId}/{game.ImgLogoUrl}.jpg"
                 : null;
 
-            return new GameViewModel
+            return new GameViewModel(game.AppId)
             {
                 IconUrl = url,
                 Name = game.Name

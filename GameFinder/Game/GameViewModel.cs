@@ -1,5 +1,8 @@
-﻿using Jellyfish;
+﻿using System;
+using Jellyfish;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace GameFinder.Game
 {
@@ -9,6 +12,15 @@ namespace GameFinder.Game
 
         private string _name;
 
+        private ICommand _launchCommand;
+
+        private ulong _appId;
+
+        public ulong AppId
+        {
+            get => _appId;
+            set => Set(ref _appId, value);
+        }
         public string IconUrl
         {
             get => _iconUrl;
@@ -19,6 +31,29 @@ namespace GameFinder.Game
         {
             get => _name;
             set => Set(ref _name, value);
+        }
+
+        public ICommand LaunchCommand
+        {
+            get => _launchCommand;
+            set => Set(ref _launchCommand, value);
+        }
+
+        public GameViewModel(ulong appId)
+        {
+            AppId = appId;
+            LaunchCommand = new RelayCommand(LaunchAction);
+        }
+
+        private void LaunchAction(object o)
+        {
+            try
+            {
+                Process.Start($"steam://run/{AppId}");
+            } catch (Exception ex)
+            {
+                Debug.WriteLine($"Could not launch app! {ex.Message}");
+            }
         }
 
         public override bool Equals(object obj)

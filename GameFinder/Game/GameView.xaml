@@ -23,7 +23,8 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Image
@@ -46,6 +47,20 @@
                 Text="{Binding Name, FallbackValue=Unknown}"
                 TextTrimming="CharacterEllipsis"
                 TextWrapping="Wrap" />
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Width="35"
+                Height="35"
+                Margin="8"
+                Padding="-15"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding LaunchCommand}"
+                Content="{md:PackIcon Play}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Launch Game" />
         </Grid>
     </md:TransitioningContent>
 </UserControl>
