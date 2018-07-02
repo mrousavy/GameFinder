@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     d:DesignHeight="450"
-    d:DesignWidth="400"
+    d:DesignWidth="450"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
     TextElement.FontSize="13"
@@ -66,10 +66,21 @@
             <TextBox
                 Grid.Row="1"
                 Grid.Column="1"
-                Width="200"
+                Width="240"
                 Margin="5"
                 md:HintAssist.Hint="Steam API Key"
                 Text="{Binding ApiKey}" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Width="20"
+                Height="20"
+                Margin="5,0,5,0"
+                Padding="-15"
+                Command="{Binding ApiKeyLaunchCommand}"
+                Content="{md:PackIcon Kind=Launch}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Get your Steam API Key" />
 
             <TextBlock
                 Grid.Row="2"
@@ -81,15 +92,27 @@
             <TextBox
                 Grid.Row="2"
                 Grid.Column="1"
-                Width="200"
+                Width="240"
                 Margin="5"
                 md:HintAssist.Hint="Steam User ID"
                 Text="{Binding UserId}" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="2"
+                Width="20"
+                Height="20"
+                Margin="5,0,5,0"
+                Padding="-15"
+                Command="{Binding UserIdLaunchCommand}"
+                Content="{md:PackIcon Kind=Launch}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Find your Steam User ID" />
 
 
             <Button
                 Grid.Row="3"
                 Grid.Column="1"
+                Grid.ColumnSpan="2"
                 HorizontalAlignment="Right"
                 Command="{Binding LoginCommand}"
                 Content="Login"

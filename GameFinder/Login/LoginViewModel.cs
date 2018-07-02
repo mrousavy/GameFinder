@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics;
+using System.Windows.Input;
 using GameFinder.ErrorDialog;
 using GameFinder.LoadingDialog;
 using Jellyfish;
@@ -21,6 +22,8 @@ namespace GameFinder.Login
         {
             Model = new LoginModel();
             LoginCommand = new RelayCommand(LoginAction);
+            ApiKeyLaunchCommand = new RelayCommand(ApiKeyAction);
+            UserIdLaunchCommand = new RelayCommand(UserIdAction);
 
             if (Session.Config != null)
             {
@@ -30,6 +33,16 @@ namespace GameFinder.Login
                 if (!string.IsNullOrWhiteSpace(Session.ApiKey) && Session.UserId > 0)
                     LoginAction(null);
             }
+        }
+
+        private static void UserIdAction(object o)
+        {
+            Process.Start("https://steamidfinder.com/");
+        }
+
+        private static void ApiKeyAction(object o)
+        {
+            Process.Start("https://steamcommunity.com/dev/apikey");
         }
 
         public string ApiKey
@@ -44,6 +57,21 @@ namespace GameFinder.Login
             set => Set(ref _userId, value);
         }
 
+        private ICommand _apiKeyLaunchCommand;
+
+        public ICommand ApiKeyLaunchCommand
+        {
+            get => _apiKeyLaunchCommand;
+            set => Set(ref _apiKeyLaunchCommand, value);
+        }
+
+        private ICommand _userIdLaunchCommand;
+
+        public ICommand UserIdLaunchCommand
+        {
+            get => _userIdLaunchCommand;
+            set => Set(ref _userIdLaunchCommand, value);
+        }
         public ICommand LoginCommand
         {
             get => _loginCommand;
