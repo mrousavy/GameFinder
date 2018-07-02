@@ -93,13 +93,15 @@ namespace GameFinder.Finder
 
         private static UserViewModel ProfileToUser(SteamCommunityProfileModel profile)
         {
+            string url = Extensions.Valid(profile.CustomURL) ? $"http://steamcommunity.com/id/{profile.CustomURL}" : null;
+
             return new UserViewModel
             {
                 AvatarUri = profile.Avatar,
                 RealName = profile.RealName,
-                Url = $"http://steamcommunity.com/id/{profile.CustomURL}",
+                Url = url,
                 Username = profile.Headline,
-                State = profile.State,
+                State = profile.StateMessage,
                 VisibilityState = (int) profile.VisibilityState
             };
         }

@@ -67,14 +67,14 @@ namespace GameFinder.User
 
         public UserViewModel()
         {
-            OpenProfileCommand = new RelayCommand(OpenProfileAction);
+            OpenProfileCommand = new RelayCommand<string>(OpenProfileAction);
         }
 
-        private void OpenProfileAction(object o)
+        private static void OpenProfileAction(string url)
         {
             try
             {
-                Process.Start(Url);
+                Process.Start(url);
             } catch
             {
                 // could not open profile

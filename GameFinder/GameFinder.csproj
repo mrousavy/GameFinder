@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config.cs" />
+    <Compile Include="Converter\SteamStateToColorConverter.cs" />
     <Compile Include="Converter\SteamStateToIconConverter.cs" />
     <Compile Include="Converter\UrlToImageConverter.cs" />
     <Compile Include="ErrorDialog\ErrorDialogView.xaml.cs">

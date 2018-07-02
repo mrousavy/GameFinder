@@ -19,7 +19,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:UrlToImageConverter x:Key="UrlToImageConverter" />
-        <converter:SteamStateToIconConverter x:Key="SteamStateToIconConverter" />
+        <converter:SteamStateToColorConverter x:Key="SteamStateToColorConverter" />
     </UserControl.Resources>
 
     <md:Card
@@ -51,7 +51,8 @@
                 Grid.Column="1"
                 Margin="15"
                 FontSize="20"
-                Text="{Binding Username, FallbackValue=Unknown}" />
+                Text="{Binding Username, FallbackValue=Unknown}"
+                ToolTip="{Binding RealName}" />
             <Button
                 Grid.Row="0"
                 Grid.Column="2"
@@ -62,6 +63,7 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding OpenProfileCommand}"
+                CommandParameter="{Binding Url}"
                 Content="{md:PackIcon Kind=Launch}"
                 Style="{StaticResource MaterialDesignFlatButton}"
                 ToolTip="Open Steam Profile in Browser" />
@@ -69,22 +71,11 @@
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
+                Grid.ColumnSpan="3"
                 Margin="5"
-                FontSize="14"
-                Text="{Binding State}" />
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="5"
-                FontSize="15"
-                Text="{Binding RealName}" />
-            <md:PackIcon
-                Grid.Row="1"
-                Grid.Column="2"
-                Margin="5"
-                FontSize="15"
-                Kind="{Binding VisibilityState, Converter={StaticResource SteamStateToIconConverter}}" />
-
+                FontSize="13"
+                Foreground="LightGray"
+                Text="{Binding State, FallbackValue=(unknown), StringFormat=({0})}" />
 
             <ItemsControl
                 Grid.Row="2"

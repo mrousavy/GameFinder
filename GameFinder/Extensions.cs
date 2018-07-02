@@ -3,7 +3,7 @@ namespace GameFinder
 {
     public static class Extensions
     {
-        public static bool IsValid(this string str)
+        public static bool Valid(string str)
         {
             return !string.IsNullOrWhiteSpace(str);
         }
