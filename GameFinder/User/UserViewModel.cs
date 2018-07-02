@@ -126,20 +126,13 @@ namespace GameFinder.User
             }
         }
 
-        private static GameViewModel OwnedGameToGame(OwnedGameModel game)
+
+        public override bool Equals(object obj)
         {
-            if (game == null)
-                return null;
-
-            string url = Extensions.Valid(game.ImgLogoUrl)
-                ? $"http://media.steampowered.com/steamcommunity/public/images/apps/{game.AppId}/{game.ImgLogoUrl}.jpg"
-                : null;
-
-            return new GameViewModel
-            {
-                IconUrl = url,
-                Name = game.Name
-            };
+            return obj is UserViewModel model &&
+                   UserId == model.UserId;
         }
+
+        public override int GetHashCode() => -566744556 + UserId.GetHashCode();
     }
 }

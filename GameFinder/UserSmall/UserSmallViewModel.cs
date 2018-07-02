@@ -31,5 +31,14 @@ namespace GameFinder.UserSmall
             get => _avatarUri;
             set => Set(ref _avatarUri, value);
         }
+
+
+        public override bool Equals(object obj)
+        {
+            return obj is UserSmallViewModel model &&
+                   UserId == model.UserId;
+        }
+
+        public override int GetHashCode() => -566744556 + UserId.GetHashCode();
     }
 }
