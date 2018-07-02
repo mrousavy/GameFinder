@@ -1,10 +1,10 @@
 ﻿<UserControl
-    x:Class="GameFinder.User.UserView"
+    x:Class="GameFinder.Game.GameView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:GameFinder.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:GameFinder.User"
+    xmlns:local="clr-namespace:GameFinder.Game"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     d:DesignHeight="450"
@@ -18,7 +18,7 @@
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <UserControl.DataContext>
-        <local:UserViewModel />
+        <local:GameViewModel />
     </UserControl.DataContext>
     <UserControl.Resources>
         <converter:UrlToImageConverter x:Key="UrlToImageConverter" />
@@ -36,42 +36,5 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-
-        <Image
-            Grid.Row="0"
-            Grid.Column="0"
-            Width="40"
-            Height="40"
-            Margin="7"
-            Source="{Binding AvatarUri, Converter={StaticResource UrlToImageConverter}}" />
-        <TextBlock
-            Grid.Row="0"
-            Grid.Column="1"
-            Margin="15"
-            FontSize="20"
-            Text="{Binding Username, FallbackValue=Unknown}" />
-        <Button
-            Grid.Row="0"
-            Grid.Column="2"
-            Width="30"
-            Height="30"
-            Margin="15"
-            Padding="-15"
-            Content="{md:PackIcon Kind=Launch}"
-            Style="{StaticResource MaterialDesignFlatButton}"
-            ToolTip="Open Steam Profile in Browser" />
-
-        <TextBlock
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="5"
-            FontSize="14"
-            Text="{Binding RealName}" />
-
-        <ItemsControl
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            ItemsSource="{Binding Games}" />
     </Grid>
 </UserControl>

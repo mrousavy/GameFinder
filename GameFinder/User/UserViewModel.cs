@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Jellyfish;
+using Steam.Models.SteamCommunity;
 
 namespace GameFinder.User
 {
@@ -21,38 +23,26 @@ namespace GameFinder.User
             set => Set(ref _realName, value);
         }
 
-        private string _avatar;
-        public string Avatar
-        {
-            get => _avatar;
-            set => Set(ref _avatar, value);
-        }
-
         private string _url;
         public string Url
         {
             get => _url;
-            set
-            {
-                Set(ref _url, value);
-                UpdateImageSource(value);
-            }
+            set => Set(ref _url, value);
         }
 
-        private ImageSource _imageSource;
-        public ImageSource ImageSource
+        private IEnumerable<OwnedGameModel> _games;
+
+        public IEnumerable<OwnedGameModel> Games
         {
-            get => _imageSource;
-            set => Set(ref _imageSource, value);
+            get => _games;
+            set => Set(ref _games, value);
         }
 
-        private void UpdateImageSource(string url)
+        private string _avatarUri;
+        public string AvatarUri
         {
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(url, UriKind.Absolute);
-            bitmap.EndInit();
-            ImageSource = bitmap;
+            get => _avatarUri;
+            set => Set(ref _avatarUri, value);
         }
     }
 }
