@@ -16,8 +16,11 @@ Ever felt like not knowing what to play even though you have thousands of games 
 
 ### Features
 * Select friends to compare games with
+* View friends details such as avatar, name, online status and profile URL
 * View all games you and the selected friends have in common
 * Launch games directly from **GameFinder**
+* Launch a random game when you can't decide
+* Material Design UI
 
 <p align="center">
     <img src="Images/demo.gif" alt="Demo GIF" width=800 />
