@@ -1,26 +1,32 @@
 ﻿using System;
-using Jellyfish;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
+using Jellyfish;
 
 namespace GameFinder.Game
 {
     public class GameViewModel : ViewModel
     {
+        private ulong _appId;
         private string _iconUrl;
-
-        private string _name;
 
         private ICommand _launchCommand;
 
-        private ulong _appId;
+        private string _name;
+
+        public GameViewModel(ulong appId)
+        {
+            AppId = appId;
+            LaunchCommand = new RelayCommand(LaunchAction);
+        }
 
         public ulong AppId
         {
             get => _appId;
             set => Set(ref _appId, value);
         }
+
         public string IconUrl
         {
             get => _iconUrl;
@@ -39,12 +45,6 @@ namespace GameFinder.Game
             set => Set(ref _launchCommand, value);
         }
 
-        public GameViewModel(ulong appId)
-        {
-            AppId = appId;
-            LaunchCommand = new RelayCommand(LaunchAction);
-        }
-
         private void LaunchAction(object o)
         {
             try
@@ -56,12 +56,9 @@ namespace GameFinder.Game
             }
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is GameViewModel model &&
-                   IconUrl == model.IconUrl &&
-                   Name == model.Name;
-        }
+        public override bool Equals(object obj) => obj is GameViewModel model &&
+                                                   IconUrl == model.IconUrl &&
+                                                   Name == model.Name;
 
         public override int GetHashCode()
         {

@@ -6,16 +6,16 @@ namespace GameFinder.Main
     {
         private int _transitionerIndex;
 
-        public int TransitionerIndex
-        {
-            get => _transitionerIndex;
-            set => Set(ref _transitionerIndex, value);
-        }
-
         public MainViewModel()
         {
             var feed = MessageFeed<TransitionerMoveStruct>.Feed;
             feed.MessageReceived += TransitionerMoveReceived;
+        }
+
+        public int TransitionerIndex
+        {
+            get => _transitionerIndex;
+            set => Set(ref _transitionerIndex, value);
         }
 
         private void TransitionerMoveReceived(TransitionerMoveStruct message)

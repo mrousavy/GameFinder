@@ -20,11 +20,11 @@ namespace GameFinder.Finder
 
         private ObservableCollection<UserViewModel> _friends;
 
+        private ICommand _gitHubCommand;
+
         private bool _isDialogOpen;
 
         private UserViewModel _myProfileViewModel;
-
-        private ICommand _gitHubCommand;
 
         private ICommand _reportBugCommand;
 
@@ -35,32 +35,6 @@ namespace GameFinder.Finder
             feed.MessageReceived += OnMessageReceived;
             ReportBugCommand = new RelayCommand(ReportBugAction);
             GitHubCommand = new RelayCommand(GitHubAction);
-        }
-
-        private void GitHubAction(object o)
-        {
-            try
-            {
-                Process.Start("https://github.com/mrousavy/GameFinder");
-            } catch (Exception ex)
-            {
-                DialogViewModel = new ErrorDialogViewModel("Could not open GitHub page! \n\r" +
-                                                           "You can open it manually: https://github.com/mrousavy/GameFinder \n\r" +
-                                                           ex.Message);
-            }
-        }
-
-        private void ReportBugAction(object o)
-        {
-            try
-            {
-                Process.Start("https://github.com/mrousavy/GameFinder/issues/new");
-            } catch (Exception ex)
-            {
-                DialogViewModel = new ErrorDialogViewModel("Could not open bug-report page!\n\r" +
-                                                           "You can open it manually: https://github.com/mrousavy/GameFinder/issues \n\r" +
-                                                           ex.Message);
-            }
         }
 
         public ICommand ReportBugCommand
@@ -74,6 +48,7 @@ namespace GameFinder.Finder
             get => _gitHubCommand;
             set => Set(ref _gitHubCommand, value);
         }
+
         public object DialogViewModel
         {
             get => _dialogViewModel;
@@ -102,6 +77,32 @@ namespace GameFinder.Finder
             set => Set(ref _friends, value);
         }
 
+        private void GitHubAction(object o)
+        {
+            try
+            {
+                Process.Start("https://github.com/mrousavy/GameFinder");
+            } catch (Exception ex)
+            {
+                DialogViewModel = new ErrorDialogViewModel("Could not open GitHub page! \n\r" +
+                                                           "You can open it manually: https://github.com/mrousavy/GameFinder \n\r" +
+                                                           ex.Message);
+            }
+        }
+
+        private void ReportBugAction(object o)
+        {
+            try
+            {
+                Process.Start("https://github.com/mrousavy/GameFinder/issues/new");
+            } catch (Exception ex)
+            {
+                DialogViewModel = new ErrorDialogViewModel("Could not open bug-report page!\n\r" +
+                                                           "You can open it manually: https://github.com/mrousavy/GameFinder/issues \n\r" +
+                                                           ex.Message);
+            }
+        }
+
         private async void OnMessageReceived(FriendsLoadedStruct message)
         {
             await Load(message.You, message.Friends);
@@ -124,7 +125,8 @@ namespace GameFinder.Finder
                 {
                     user.Games = await SteamHelper.LoadGamesAsync(user.SteamId);
                     if (!user.Games.Any())
-                        throw new Exception($"{user.SteamId}'s steam profile is set to private or games could not be loaded!");
+                        throw new Exception(
+                            $"{user.SteamId}'s steam profile is set to private or games could not be loaded!");
                 }
 
                 var equalityComparer = new GameEqualityComparer();

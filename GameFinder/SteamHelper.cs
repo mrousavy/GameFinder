@@ -1,11 +1,11 @@
 ﻿using System;
-using GameFinder.Game;
-using Steam.Models.SteamCommunity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameFinder.Game;
 using GameFinder.User;
 using GameFinder.UserSmall;
+using Steam.Models.SteamCommunity;
 
 namespace GameFinder
 {

@@ -15,6 +15,8 @@ namespace GameFinder.User
 
         private ObservableCollection<GameViewModel> _games;
 
+        private ICommand _launchRandomCommand;
+
         private ICommand _openProfileCommand;
 
         private string _realName;
@@ -89,8 +91,6 @@ namespace GameFinder.User
             set => Set(ref _openProfileCommand, value);
         }
 
-        private ICommand _launchRandomCommand;
-
         public ICommand LaunchRandomCommand
         {
             get => _launchRandomCommand;
@@ -119,11 +119,8 @@ namespace GameFinder.User
             }
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is UserViewModel model &&
-                   UserId == model.UserId;
-        }
+        public override bool Equals(object obj) => obj is UserViewModel model &&
+                                                   UserId == model.UserId;
 
         public override int GetHashCode() => UserId.GetHashCode() - 566744556;
     }

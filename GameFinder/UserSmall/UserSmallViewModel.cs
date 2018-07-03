@@ -33,11 +33,8 @@ namespace GameFinder.UserSmall
         }
 
 
-        public override bool Equals(object obj)
-        {
-            return obj is UserSmallViewModel model &&
-                   UserId == model.UserId;
-        }
+        public override bool Equals(object obj) => obj is UserSmallViewModel model &&
+                                                   UserId == model.UserId;
 
         public override int GetHashCode() => -566744556 + UserId.GetHashCode();
     }
