@@ -133,7 +133,7 @@ namespace GameFinder.Finder
                     .Where(game => users.All(friend => friend.Games.Any(friendGame => friendGame.AppId == game.AppId)))
                     .Distinct(equalityComparer)
                     .ToList();
-                var gameViewModels = mutualGames.Select(SteamHelper.OwnedGameToGame);
+                var gameViewModels = mutualGames.Select(SteamHelper.OwnedGameToGame).OrderBy(g => g.Name);
                 var games = new ObservableCollection<GameViewModel>(gameViewModels);
 
 
@@ -142,7 +142,8 @@ namespace GameFinder.Finder
                 MyProfileViewModel.Games = games;
 
                 // Load all friends
-                Friends = new ObservableCollection<UserViewModel>(profiles.Select(SteamHelper.ProfileToUser));
+                var ordered = profiles.Select(SteamHelper.ProfileToUser).OrderBy(u => u.Username);
+                Friends = new ObservableCollection<UserViewModel>(ordered);
                 foreach (var friend in Friends)
                 {
                     friend.Games = games;

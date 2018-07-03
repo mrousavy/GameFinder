@@ -107,8 +107,8 @@ namespace GameFinder.FriendChooser
             try
             {
                 var friends = await SteamHelper.GetFriends();
-                AllFriends =
-                    new ObservableCollection<UserSmallViewModel>(friends.Select(SteamHelper.ProfileToUserSmall));
+                var ordered = friends.Select(SteamHelper.ProfileToUserSmall).OrderBy(f => f.Username);
+                AllFriends = new ObservableCollection<UserSmallViewModel>(ordered);
 
                 IsDialogOpen = false;
             } catch (Exception ex)
