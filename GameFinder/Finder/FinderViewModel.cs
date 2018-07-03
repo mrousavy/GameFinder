@@ -132,8 +132,9 @@ namespace GameFinder.Finder
                     .SelectMany(x => x.Games)
                     .Where(game => users.All(friend => friend.Games.Any(friendGame => friendGame.AppId == game.AppId)))
                     .Distinct(equalityComparer)
+                    .OrderBy(g => g.Name)
                     .ToList();
-                var gameViewModels = mutualGames.Select(SteamHelper.OwnedGameToGame).OrderBy(g => g.Name);
+                var gameViewModels = mutualGames.Select(SteamHelper.OwnedGameToGame);
                 var games = new ObservableCollection<GameViewModel>(gameViewModels);
 
 
