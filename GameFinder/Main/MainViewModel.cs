@@ -11,5 +11,24 @@ namespace GameFinder.Main
             get => _transitionerIndex;
             set => Set(ref _transitionerIndex, value);
         }
+
+        public MainViewModel()
+        {
+            var feed = MessageFeed<TransitionerMoveStruct>.Feed;
+            feed.MessageReceived += TransitionerMoveReceived;
+        }
+
+        private void TransitionerMoveReceived(TransitionerMoveStruct message)
+        {
+            switch (message.Direction)
+            {
+                case TransitionerDirection.Backwards:
+                    TransitionerIndex--;
+                    break;
+                case TransitionerDirection.Forwards:
+                    TransitionerIndex++;
+                    break;
+            }
+        }
     }
 }

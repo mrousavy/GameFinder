@@ -29,9 +29,6 @@ namespace GameFinder.Login
             {
                 ApiKey = Session.ApiKey;
                 UserId = Session.UserId.ToString();
-
-                if (!string.IsNullOrWhiteSpace(Session.ApiKey) && Session.UserId > 0)
-                    LoginAction(null);
             }
         }
 

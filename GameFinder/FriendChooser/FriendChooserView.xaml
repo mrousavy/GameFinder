@@ -49,6 +49,7 @@
                 VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -67,8 +68,25 @@
                     FontSize="18"
                     Text="Select friends to find games to play with" />
 
-                <ListView
+                <TextBlock
                     Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="All friends" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="Selected friends" />
+
+                <ListView
+                    Grid.Row="2"
                     Grid.Column="0"
                     MinHeight="50"
                     Margin="15"
@@ -78,7 +96,7 @@
                     ItemsSource="{Binding AllFriends}" />
 
                 <ListView
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.Column="1"
                     MinHeight="50"
                     Margin="15"
@@ -88,7 +106,7 @@
                     ItemsSource="{Binding ChosenFriends}" />
 
                 <Button
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Grid.Column="1"
                     Margin="5"
                     HorizontalAlignment="Right"

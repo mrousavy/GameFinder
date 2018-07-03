@@ -1,5 +1,4 @@
 ﻿using Jellyfish;
-using MaterialDesignThemes.Wpf.Transitions;
 using SteamWebAPI2.Interfaces;
 
 namespace GameFinder.Login
@@ -16,7 +15,7 @@ namespace GameFinder.Login
             var feed = MessageFeed<bool>.Feed;
             feed.Notify(true);
 
-            Transitioner.MoveNextCommand.Execute(null, null);
+            Extensions.MoveForwards();
         }
     }
 }

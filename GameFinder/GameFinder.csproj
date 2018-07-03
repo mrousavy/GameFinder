@@ -91,6 +91,7 @@
     <Compile Include="Session.cs" />
     <Compile Include="SteamHelper.cs" />
     <Compile Include="SteamProfile.cs" />
+    <Compile Include="TransitionerMoveStruct.cs" />
     <Compile Include="UserSmall\UserSmallView.xaml.cs">
       <DependentUpon>UserSmallView.xaml</DependentUpon>
     </Compile>

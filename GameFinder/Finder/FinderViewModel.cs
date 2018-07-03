@@ -10,6 +10,7 @@ using GameFinder.Game;
 using GameFinder.LoadingDialog;
 using GameFinder.User;
 using Jellyfish;
+using MaterialDesignThemes.Wpf;
 using Steam.Models.SteamCommunity;
 
 namespace GameFinder.Finder
@@ -35,6 +36,7 @@ namespace GameFinder.Finder
             feed.MessageReceived += OnMessageReceived;
             ReportBugCommand = new RelayCommand(ReportBugAction);
             GitHubCommand = new RelayCommand(GitHubAction);
+            SnackbarQueue = new SnackbarMessageQueue();
         }
 
         private void GitHubAction(object o)
@@ -55,7 +57,7 @@ namespace GameFinder.Finder
             try
             {
                 Process.Start("https://github.com/mrousavy/GameFinder/issues/new");
-            } catch(Exception ex)
+            } catch (Exception ex)
             {
                 DialogViewModel = new ErrorDialogViewModel("Could not open bug-report page!\n\r" +
                                                            "You can open it manually: https://github.com/mrousavy/GameFinder/issues \n\r" +
@@ -63,6 +65,14 @@ namespace GameFinder.Finder
             }
         }
 
+
+        private ISnackbarMessageQueue _snackbarQueue;
+
+        public ISnackbarMessageQueue SnackbarQueue
+        {
+            get => _snackbarQueue;
+            set => Set(ref _snackbarQueue, value);
+        }
 
         public ICommand ReportBugCommand
         {
@@ -124,6 +134,8 @@ namespace GameFinder.Finder
                 foreach (var user in users)
                 {
                     user.Games = await SteamHelper.LoadGamesAsync(user.SteamId);
+                    if (!user.Games.Any())
+                        SnackbarQueue.Enqueue($"{user.SteamId}'s profile is set to private!");
                 }
 
                 var equalityComparer = new GameEqualityComparer();
@@ -142,7 +154,7 @@ namespace GameFinder.Finder
 
                 // Load all friends
                 Friends = new ObservableCollection<UserViewModel>(profiles.Select(SteamHelper.ProfileToUser));
-                foreach(var friend in Friends)
+                foreach (var friend in Friends)
                 {
                     friend.Games = games;
                 }
@@ -151,7 +163,7 @@ namespace GameFinder.Finder
             } catch (Exception ex)
             {
                 DialogViewModel = new ErrorDialogViewModel(
-                    $"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
+                    $"Could not find matching games! Perhaps a profile is set to private?\n\r{ex.Message}");
             }
         }
     }

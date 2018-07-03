@@ -8,7 +8,6 @@ using GameFinder.ErrorDialog;
 using GameFinder.LoadingDialog;
 using GameFinder.UserSmall;
 using Jellyfish;
-using MaterialDesignThemes.Wpf.Transitions;
 using Steam.Models.SteamCommunity;
 
 namespace GameFinder.FriendChooser
@@ -85,11 +84,11 @@ namespace GameFinder.FriendChooser
                 feed.Notify(new FriendsLoadedStruct(profiles, you));
 
                 IsDialogOpen = false;
-                Transitioner.MoveNextCommand.Execute(null, null);
+                Extensions.MoveForwards();
             } catch (Exception ex)
             {
                 DialogViewModel = new ErrorDialogViewModel(
-                    $"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
+                    $"Could not load selected profiles! Perhaps a profile is set to private?\n\r{ex.Message}");
             }
         }
 

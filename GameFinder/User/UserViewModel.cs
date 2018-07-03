@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Input;
 using GameFinder.Game;
 using Jellyfish;
@@ -31,7 +32,7 @@ namespace GameFinder.User
         {
             UserId = userId;
             OpenProfileCommand = new RelayCommand<string>(OpenProfileAction);
-            LaunchRandomCommand = new RelayCommand(LaunchRandomAction);
+            LaunchRandomCommand = new RelayCommand(LaunchRandomAction, o => Games.Any());
         }
 
         public ulong UserId
@@ -109,10 +110,13 @@ namespace GameFinder.User
 
         private void LaunchRandomAction(object o)
         {
-            var random = new Random();
-            int index = random.Next(Games.Count);
-            var game = Games[index];
-            game.LaunchCommand.Execute(null);
+            if (Games.Any())
+            {
+                var random = new Random();
+                int index = random.Next(Games.Count);
+                var game = Games[index];
+                game.LaunchCommand.Execute(null);
+            }
         }
 
         public override bool Equals(object obj)
