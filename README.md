@@ -10,7 +10,7 @@
     <blockquote align="center">
     <p>🎮 An application for finding games to play you and your friends have on Steam</p>
     </blockquote>
-    <h2 align="center"><a href="#how-to-run">⇩ Download ⇩</a></h2>
+    <h2 align="center"><a href="https://github.com/mrousavy/GameFinder/releases/latest">⇩ Download ⇩</a></h2>
 </p>
 
 Ever felt like not knowing what to play even though you have thousands of games in your steam library? **GameFinder** finds matching games you and your friends have in common.
