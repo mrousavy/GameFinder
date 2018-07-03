@@ -29,7 +29,7 @@ namespace GameFinder.FriendChooser
             feed.MessageReceived += OnMessageReceived;
             AllFriends = new ObservableCollection<UserSmallViewModel>();
             ChosenFriends = new ObservableCollection<UserSmallViewModel>();
-            OkCommand = new RelayCommand(OkAction);
+            OkCommand = new RelayCommand(OkAction, o => ChosenFriends.Any());
         }
 
         public ObservableCollection<UserSmallViewModel> AllFriends
