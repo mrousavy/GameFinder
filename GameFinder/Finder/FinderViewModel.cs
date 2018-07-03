@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using GameFinder.ErrorDialog;
 using GameFinder.Game;
 using GameFinder.LoadingDialog;
@@ -22,14 +24,57 @@ namespace GameFinder.Finder
 
         private UserViewModel _myProfileViewModel;
 
+        private ICommand _gitHubCommand;
+
+        private ICommand _reportBugCommand;
+
 
         public FinderViewModel()
         {
             var feed = MessageFeed<FriendsLoadedStruct>.Feed;
             feed.MessageReceived += OnMessageReceived;
+            ReportBugCommand = new RelayCommand(ReportBugAction);
+            GitHubCommand = new RelayCommand(GitHubAction);
+        }
+
+        private void GitHubAction(object o)
+        {
+            try
+            {
+                Process.Start("https://github.com/mrousavy/GameFinder");
+            } catch (Exception ex)
+            {
+                DialogViewModel = new ErrorDialogViewModel("Could not open GitHub page! \n\r" +
+                                                           "You can open it manually: https://github.com/mrousavy/GameFinder \n\r" +
+                                                           ex.Message);
+            }
+        }
+
+        private void ReportBugAction(object o)
+        {
+            try
+            {
+                Process.Start("https://github.com/mrousavy/GameFinder/issues/new");
+            } catch(Exception ex)
+            {
+                DialogViewModel = new ErrorDialogViewModel("Could not open bug-report page!\n\r" +
+                                                           "You can open it manually: https://github.com/mrousavy/GameFinder/issues \n\r" +
+                                                           ex.Message);
+            }
         }
 
 
+        public ICommand ReportBugCommand
+        {
+            get => _reportBugCommand;
+            set => Set(ref _reportBugCommand, value);
+        }
+
+        public ICommand GitHubCommand
+        {
+            get => _gitHubCommand;
+            set => Set(ref _gitHubCommand, value);
+        }
         public object DialogViewModel
         {
             get => _dialogViewModel;

@@ -30,6 +30,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <StackPanel
@@ -67,6 +68,32 @@
                 Style="{StaticResource MaterialDesignFlatButton}"
                 ToolTip="Go back" />
 
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <Button
+                    Width="30"
+                    Height="30"
+                    Margin="5"
+                    Padding="-15"
+                    Command="{Binding GitHubCommand}"
+                    Content="{md:PackIcon Kind=GithubCircle}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="View on GitHub" />
+                <Button
+                    Width="30"
+                    Height="30"
+                    Margin="5"
+                    Padding="-15"
+                    Command="{Binding ReportBugCommand}"
+                    Content="{md:PackIcon Kind=Bug}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Report a bug" />
+            </StackPanel>
+
             <UserControl
                 Grid.Row="1"
                 Grid.Column="0"
@@ -75,6 +102,7 @@
             <ScrollViewer
                 Grid.Row="1"
                 Grid.Column="1"
+                Grid.ColumnSpan="2"
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Disabled">
                 <ItemsControl ItemsSource="{Binding Friends}">
