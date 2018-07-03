@@ -20,10 +20,6 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <converter:UrlToImageConverter x:Key="UrlToImageConverter" />
-        <BitmapImage x:Key="DefaultAvatar" UriSource="/Resources/DefaultAvatar.png" />
-    </UserControl.Resources>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -44,7 +40,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" MaxWidth="170" />
+                    <ColumnDefinition Width="Auto" MaxWidth="150" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
