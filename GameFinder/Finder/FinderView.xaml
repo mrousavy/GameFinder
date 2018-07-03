@@ -22,101 +22,97 @@
 
     <md:DialogHost DialogContent="{Binding DialogViewModel}" IsOpen="{Binding IsDialogOpen}">
         <Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-                <StackPanel
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <md:PackIcon
+                    Width="40"
+                    Height="40"
+                    Margin="15"
                     HorizontalAlignment="Center"
-                    Orientation="Horizontal">
-                    <md:PackIcon
-                        Width="40"
-                        Height="40"
-                        Margin="15"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Kind="Steam" />
-                    <TextBlock
-                        Margin="15"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="22"
-                        Text="Game Finder" />
-                </StackPanel>
+                    VerticalAlignment="Center"
+                    Kind="Steam" />
+                <TextBlock
+                    Margin="15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="22"
+                    Text="Game Finder" />
+            </StackPanel>
 
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="30"
+                Height="30"
+                Margin="5"
+                Padding="-15"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{x:Static md:Transitioner.MovePreviousCommand}"
+                Content="{md:PackIcon Kind=ChevronLeft}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Go back" />
+
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
                 <Button
-                    Grid.Row="0"
-                    Grid.Column="0"
                     Width="30"
                     Height="30"
                     Margin="5"
                     Padding="-15"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Command="{x:Static md:Transitioner.MovePreviousCommand}"
-                    Content="{md:PackIcon Kind=ChevronLeft}"
+                    Command="{Binding GitHubCommand}"
+                    Content="{md:PackIcon Kind=GithubCircle}"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    ToolTip="Go back" />
+                    ToolTip="View on GitHub" />
+                <Button
+                    Width="30"
+                    Height="30"
+                    Margin="5"
+                    Padding="-15"
+                    Command="{Binding ReportBugCommand}"
+                    Content="{md:PackIcon Kind=Bug}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Report a bug" />
+            </StackPanel>
 
-                <StackPanel
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Orientation="Horizontal">
-                    <Button
-                        Width="30"
-                        Height="30"
-                        Margin="5"
-                        Padding="-15"
-                        Command="{Binding GitHubCommand}"
-                        Content="{md:PackIcon Kind=GithubCircle}"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        ToolTip="View on GitHub" />
-                    <Button
-                        Width="30"
-                        Height="30"
-                        Margin="5"
-                        Padding="-15"
-                        Command="{Binding ReportBugCommand}"
-                        Content="{md:PackIcon Kind=Bug}"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        ToolTip="Report a bug" />
-                </StackPanel>
+            <UserControl
+                Grid.Row="1"
+                Grid.Column="0"
+                Content="{Binding MyProfileViewModel}" />
 
-                <UserControl
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Content="{Binding MyProfileViewModel}" />
-
-                <ScrollViewer
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    HorizontalScrollBarVisibility="Auto"
-                    VerticalScrollBarVisibility="Disabled">
-                    <ItemsControl ItemsSource="{Binding Friends}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Grid>
-
-            <md:Snackbar MessageQueue="{Binding SnackbarQueue}" />
+            <ScrollViewer
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding Friends}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </md:DialogHost>
 </UserControl>

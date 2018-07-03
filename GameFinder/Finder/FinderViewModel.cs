@@ -10,7 +10,6 @@ using GameFinder.Game;
 using GameFinder.LoadingDialog;
 using GameFinder.User;
 using Jellyfish;
-using MaterialDesignThemes.Wpf;
 using Steam.Models.SteamCommunity;
 
 namespace GameFinder.Finder
@@ -36,7 +35,6 @@ namespace GameFinder.Finder
             feed.MessageReceived += OnMessageReceived;
             ReportBugCommand = new RelayCommand(ReportBugAction);
             GitHubCommand = new RelayCommand(GitHubAction);
-            SnackbarQueue = new SnackbarMessageQueue();
         }
 
         private void GitHubAction(object o)
@@ -63,15 +61,6 @@ namespace GameFinder.Finder
                                                            "You can open it manually: https://github.com/mrousavy/GameFinder/issues \n\r" +
                                                            ex.Message);
             }
-        }
-
-
-        private ISnackbarMessageQueue _snackbarQueue;
-
-        public ISnackbarMessageQueue SnackbarQueue
-        {
-            get => _snackbarQueue;
-            set => Set(ref _snackbarQueue, value);
         }
 
         public ICommand ReportBugCommand
@@ -135,7 +124,7 @@ namespace GameFinder.Finder
                 {
                     user.Games = await SteamHelper.LoadGamesAsync(user.SteamId);
                     if (!user.Games.Any())
-                        SnackbarQueue.Enqueue($"{user.SteamId}'s profile is set to private!");
+                        throw new Exception($"{user.SteamId}'s steam profile is set to private or games could not be loaded!");
                 }
 
                 var equalityComparer = new GameEqualityComparer();
