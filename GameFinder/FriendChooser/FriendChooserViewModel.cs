@@ -69,19 +69,28 @@ namespace GameFinder.FriendChooser
 
         private async void OkAction(object o)
         {
-            var you = await SteamHelper.GetProfile(Session.UserId);
-
-            var feed = MessageFeed<FriendsLoadedStruct>.Feed;
-
-            IList<PlayerSummaryModel> profiles = new List<PlayerSummaryModel>();
-            foreach (var friend in ChosenFriends)
+            DialogViewModel = new LoadingDialogViewModel("Loading games...");
+            try
             {
-                var profile = await SteamHelper.GetProfile(friend.UserId);
-                profiles.Add(profile);
-            }
+                var you = await SteamHelper.GetProfile(Session.UserId);
 
-            feed.Notify(new FriendsLoadedStruct(profiles, you));
-            Transitioner.MoveNextCommand.Execute(null, null);
+                IList<PlayerSummaryModel> profiles = new List<PlayerSummaryModel>();
+                foreach (var friend in ChosenFriends)
+                {
+                    var profile = await SteamHelper.GetProfile(friend.UserId);
+                    profiles.Add(profile);
+                }
+
+                var feed = MessageFeed<FriendsLoadedStruct>.Feed;
+                feed.Notify(new FriendsLoadedStruct(profiles, you));
+
+                IsDialogOpen = false;
+                Transitioner.MoveNextCommand.Execute(null, null);
+            } catch (Exception ex)
+            {
+                DialogViewModel = new ErrorDialogViewModel(
+                    $"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
+            }
         }
 
 
@@ -95,7 +104,7 @@ namespace GameFinder.FriendChooser
             if (Session.SteamUser == null)
                 return;
 
-            DialogViewModel = new LoadingDialogViewModel();
+            DialogViewModel = new LoadingDialogViewModel("Loading friends...");
             try
             {
                 var friends = await SteamHelper.GetFriends();

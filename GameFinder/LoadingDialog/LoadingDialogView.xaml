@@ -48,7 +48,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             FontSize="20"
-            Text="Loading..." />
+            Text="{Binding Title, FallbackValue=Loading...}" />
 
         <ProgressBar
             Grid.Row="1"

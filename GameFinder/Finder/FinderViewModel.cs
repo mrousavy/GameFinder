@@ -68,7 +68,7 @@ namespace GameFinder.Finder
             if (Session.SteamUser == null)
                 return;
 
-            DialogViewModel = new LoadingDialogViewModel();
+            DialogViewModel = new LoadingDialogViewModel("Matching games...");
             try
             {
                 // Load mutual games

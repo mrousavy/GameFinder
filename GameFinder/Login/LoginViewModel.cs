@@ -98,9 +98,9 @@ namespace GameFinder.Login
 
         private void LoginAction(object o)
         {
+            DialogViewModel = new LoadingDialogViewModel("Loading...");
             try
             {
-                DialogViewModel = new LoadingDialogViewModel();
                 Model.Login(ApiKey, UserId);
                 IsDialogOpen = false;
             } catch
