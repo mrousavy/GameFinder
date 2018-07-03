@@ -53,8 +53,8 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -70,7 +70,6 @@
                 <ListView
                     Grid.Row="1"
                     Grid.Column="0"
-                    MinWidth="300"
                     MinHeight="50"
                     Margin="15"
                     dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"
@@ -81,7 +80,6 @@
                 <ListView
                     Grid.Row="1"
                     Grid.Column="1"
-                    MinWidth="300"
                     MinHeight="50"
                     Margin="15"
                     dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"

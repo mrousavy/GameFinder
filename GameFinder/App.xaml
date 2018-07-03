@@ -52,10 +52,7 @@
             <BitmapImage x:Key="DefaultGame" UriSource="/Resources/DefaultGame.png" />
 
             <DataTemplate x:Key="UserDragAdorner" DataType="{x:Type userSmall:UserSmallViewModel}">
-                <md:Card
-                    Margin="5"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                <md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid Margin="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

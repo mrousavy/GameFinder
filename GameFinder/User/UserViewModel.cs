@@ -31,6 +31,7 @@ namespace GameFinder.User
         {
             UserId = userId;
             OpenProfileCommand = new RelayCommand<string>(OpenProfileAction);
+            LaunchRandomCommand = new RelayCommand(LaunchRandomAction);
         }
 
         public ulong UserId
@@ -87,6 +88,14 @@ namespace GameFinder.User
             set => Set(ref _openProfileCommand, value);
         }
 
+        private ICommand _launchRandomCommand;
+
+        public ICommand LaunchRandomCommand
+        {
+            get => _launchRandomCommand;
+            set => Set(ref _launchRandomCommand, value);
+        }
+
         private static void OpenProfileAction(string url)
         {
             try
@@ -96,6 +105,14 @@ namespace GameFinder.User
             {
                 // could not open profile
             }
+        }
+
+        private void LaunchRandomAction(object o)
+        {
+            var random = new Random();
+            int index = random.Next(Games.Count);
+            var game = Games[index];
+            game.LaunchCommand.Execute(null);
         }
 
         public override bool Equals(object obj)

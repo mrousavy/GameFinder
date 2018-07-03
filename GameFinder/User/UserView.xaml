@@ -39,12 +39,12 @@
             <Grid Margin="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60" />
-                    <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" MaxWidth="200" />
+                    <ColumnDefinition Width="Auto" MaxWidth="170" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
@@ -75,7 +75,7 @@
                     VerticalAlignment="Top"
                     Command="{Binding OpenProfileCommand}"
                     CommandParameter="{Binding Url}"
-                    Content="{md:PackIcon Kind=Launch}"
+                    Content="{md:PackIcon Kind=Web}"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     ToolTip="Open Steam Profile in Browser" />
 
@@ -84,11 +84,25 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="5"
+                    VerticalAlignment="Center"
                     FontSize="13"
                     Foreground="LightGray"
                     Text="{Binding State, FallbackValue=(unknown), StringFormat=({0})}"
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="Wrap" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Width="30"
+                    Height="30"
+                    Margin="5"
+                    Padding="-15"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Command="{Binding LaunchRandomCommand}"
+                    Content="{md:PackIcon Kind=AutoFix}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Launch a random game" />
 
                 <ScrollViewer
                     Grid.Row="2"
