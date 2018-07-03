@@ -39,5 +39,10 @@ Ever felt like not knowing what to play even though you have thousands of games 
 * Build with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>
 * Run the generated `GameFinder.exe` in `bin/Release/`
 
+Fill in your **Steam API Key** (create one [here](https://steamcommunity.com/dev/apikey)), and **your profile's SteamID64** (get it [here](https://steamidfinder.com/)) and make sure that the profiles you select _(including your own)_ **are public and display owned games.**
+
+<br/>
+<br/>
+<br/>
 
 > Made with C# + WPF MVVM + [Material Design](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) + [Jellyfish](https://github.com/mrousavy/Jellyfish) + [SteamWebAPI2](https://github.com/babelshift/SteamWebAPI2) | [Icon](http://www.iconarchive.com/show/enkel-icons-by-froyoshark/Steam-icon.html)
