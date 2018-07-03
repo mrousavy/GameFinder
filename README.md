@@ -40,4 +40,4 @@ Ever felt like not knowing what to play even though you have thousands of games 
 * Run the generated `GameFinder.exe` in `bin/Release/`
 
 
-> Made with C# + WPF MVVM + [Material Design](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) + [Jellyfish](https://github.com/mrousavy/Jellyfish) | [Icon](http://www.iconarchive.com/show/enkel-icons-by-froyoshark/Steam-icon.html)
+> Made with C# + WPF MVVM + [Material Design](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) + [Jellyfish](https://github.com/mrousavy/Jellyfish) + [SteamWebAPI2](https://github.com/babelshift/SteamWebAPI2) | [Icon](http://www.iconarchive.com/show/enkel-icons-by-froyoshark/Steam-icon.html)
