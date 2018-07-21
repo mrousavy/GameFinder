@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:GameFinder.Finder"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Name="View"
     d:DesignHeight="450"
     d:DesignWidth="500"
     Background="{DynamicResource MaterialDesignPaper}"
@@ -33,6 +34,20 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="30"
+                Height="30"
+                Margin="5"
+                Padding="-15"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{x:Static md:Transitioner.MovePreviousCommand}"
+                Content="{md:PackIcon Kind=ChevronLeft}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                ToolTip="Go back" />
+
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="0"
@@ -53,20 +68,6 @@
                     FontSize="22"
                     Text="Game Finder" />
             </StackPanel>
-
-            <Button
-                Grid.Row="0"
-                Grid.Column="0"
-                Width="30"
-                Height="30"
-                Margin="5"
-                Padding="-15"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{x:Static md:Transitioner.MovePreviousCommand}"
-                Content="{md:PackIcon Kind=ChevronLeft}"
-                Style="{StaticResource MaterialDesignFlatButton}"
-                ToolTip="Go back" />
 
             <StackPanel
                 Grid.Row="0"
@@ -94,21 +95,27 @@
                     ToolTip="Report a bug" />
             </StackPanel>
 
-            <UserControl
-                Grid.Row="1"
-                Grid.Column="0"
-                Content="{Binding MyProfileViewModel}" />
+
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <UserControl Content="{Binding MyProfileViewModel}" />
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding Friends}" />
+                </ScrollViewer>
+            </StackPanel>
 
             <ScrollViewer
+                Name="ScrollViewer"
                 Grid.Row="1"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
-                HorizontalScrollBarVisibility="Auto"
-                VerticalScrollBarVisibility="Disabled">
-                <ItemsControl ItemsSource="{Binding Friends}">
+                HorizontalScrollBarVisibility="Disabled"
+                SizeChanged="ScrollViewerSizeChanged"
+                VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Games}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
+                            <UniformGrid Columns="{Binding ElementName=View, Path=DataContext.TileColumns}" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>

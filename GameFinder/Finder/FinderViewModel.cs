@@ -28,6 +28,10 @@ namespace GameFinder.Finder
 
         private ICommand _reportBugCommand;
 
+        private ObservableCollection<GameViewModel> _games;
+
+        private int _tileColumns;
+        
 
         public FinderViewModel()
         {
@@ -48,6 +52,11 @@ namespace GameFinder.Finder
             get => _gitHubCommand;
             set => Set(ref _gitHubCommand, value);
         }
+        public int TileColumns
+        {
+            get => _tileColumns;
+            set => Set(ref _tileColumns, value);
+        }
 
         public object DialogViewModel
         {
@@ -63,6 +72,12 @@ namespace GameFinder.Finder
         {
             get => _isDialogOpen;
             set => Set(ref _isDialogOpen, value);
+        }
+
+        public ObservableCollection<GameViewModel> Games
+        {
+            get => _games;
+            set => Set(ref _games, value);
         }
 
         public UserViewModel MyProfileViewModel
@@ -137,20 +152,14 @@ namespace GameFinder.Finder
                     .OrderBy(g => g.Name)
                     .ToList();
                 var gameViewModels = mutualGames.Select(SteamHelper.OwnedGameToGame);
-                var games = new ObservableCollection<GameViewModel>(gameViewModels);
-
+                Games = new ObservableCollection<GameViewModel>(gameViewModels);
 
                 // Load own profile
                 MyProfileViewModel = SteamHelper.ProfileToUser(you);
-                MyProfileViewModel.Games = games;
 
                 // Load all friends
                 var ordered = profiles.Select(SteamHelper.ProfileToUser).OrderBy(u => u.Username);
                 Friends = new ObservableCollection<UserViewModel>(ordered);
-                foreach (var friend in Friends)
-                {
-                    friend.Games = games;
-                }
 
                 IsDialogOpen = false;
             } catch (Exception ex)

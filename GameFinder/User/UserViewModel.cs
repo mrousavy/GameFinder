@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Input;
-using GameFinder.Game;
 using Jellyfish;
 using Steam.Models.SteamCommunity;
 
@@ -12,10 +9,6 @@ namespace GameFinder.User
     public class UserViewModel : ViewModel
     {
         private Uri _avatarUri;
-
-        private ObservableCollection<GameViewModel> _games;
-
-        private ICommand _launchRandomCommand;
 
         private ICommand _openProfileCommand;
 
@@ -30,11 +23,14 @@ namespace GameFinder.User
 
         private int _visibilityState;
 
+        private int _matchingGames;
+
+        private int _totalGames;
+
         public UserViewModel(ulong userId)
         {
             UserId = userId;
             OpenProfileCommand = new RelayCommand<string>(OpenProfileAction);
-            LaunchRandomCommand = new RelayCommand(LaunchRandomAction, o => Games.Any());
         }
 
         public ulong UserId
@@ -48,6 +44,28 @@ namespace GameFinder.User
             get => _username;
             set => Set(ref _username, value);
         }
+
+        public int MatchingGames
+        {
+            get => _matchingGames;
+            set
+            {
+                Set(ref _matchingGames, value);
+                Notify(nameof(MatchingGamesString));
+            }
+        }
+
+        public int TotalGames
+        {
+            get => _totalGames;
+            set
+            {
+                Set(ref _totalGames, value);
+                Notify(nameof(MatchingGamesString));
+            }
+        }
+
+        public string MatchingGamesString => $"{MatchingGames}/{TotalGames} matching";
 
         public string RealName
         {
@@ -73,12 +91,6 @@ namespace GameFinder.User
             set => Set(ref _visibilityState, value);
         }
 
-        public ObservableCollection<GameViewModel> Games
-        {
-            get => _games;
-            set => Set(ref _games, value);
-        }
-
         public Uri AvatarUri
         {
             get => _avatarUri;
@@ -91,12 +103,6 @@ namespace GameFinder.User
             set => Set(ref _openProfileCommand, value);
         }
 
-        public ICommand LaunchRandomCommand
-        {
-            get => _launchRandomCommand;
-            set => Set(ref _launchRandomCommand, value);
-        }
-
         private static void OpenProfileAction(string url)
         {
             try
@@ -105,17 +111,6 @@ namespace GameFinder.User
             } catch
             {
                 // could not open profile
-            }
-        }
-
-        private void LaunchRandomAction(object o)
-        {
-            if (Games.Any())
-            {
-                var random = new Random();
-                int index = random.Next(Games.Count);
-                var game = Games[index];
-                game.LaunchCommand.Execute(null);
             }
         }
 

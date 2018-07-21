@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace GameFinder.Finder
 {
@@ -10,6 +11,13 @@ namespace GameFinder.Finder
         public FinderView()
         {
             InitializeComponent();
+        }
+
+        private void ScrollViewerSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double width = ScrollViewer.ActualWidth;
+            if (DataContext is FinderViewModel model)
+                model.TileColumns = (int) width / 300; // 300 is a Tile's width
         }
     }
 }
