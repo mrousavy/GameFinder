@@ -31,7 +31,10 @@ namespace GameFinder.Finder
         private ObservableCollection<GameViewModel> _games;
 
         private int _tileColumns;
-        
+
+        private ICommand _launchRandomGameCommand;
+
+        private readonly Random _random;
 
         public FinderViewModel()
         {
@@ -39,6 +42,8 @@ namespace GameFinder.Finder
             feed.MessageReceived += OnMessageReceived;
             ReportBugCommand = new RelayCommand(ReportBugAction);
             GitHubCommand = new RelayCommand(GitHubAction);
+            LaunchRandomGameCommand = new RelayCommand(LaunchRandomGameAction, o => Games?.Count > 0);
+            _random = new Random();
         }
 
         public ICommand ReportBugCommand
@@ -52,6 +57,13 @@ namespace GameFinder.Finder
             get => _gitHubCommand;
             set => Set(ref _gitHubCommand, value);
         }
+
+        public ICommand LaunchRandomGameCommand
+        {
+            get => _launchRandomGameCommand;
+            set => Set(ref _launchRandomGameCommand, value);
+        }
+
         public int TileColumns
         {
             get => _tileColumns;
@@ -114,6 +126,32 @@ namespace GameFinder.Finder
             {
                 DialogViewModel = new ErrorDialogViewModel("Could not open bug-report page!\n\r" +
                                                            "You can open it manually: https://github.com/mrousavy/GameFinder/issues \n\r" +
+                                                           ex.Message);
+            }
+        }
+
+        private void LaunchRandomGameAction(object o)
+        {
+            try
+            {
+                int count = Games?.Count ?? 0;
+                int random = _random.Next(0, count);
+                var game = Games?[random];
+
+                if (game == null)
+                {
+                    DialogViewModel = new ErrorDialogViewModel("A random game could not be selected!");
+                } else
+                {
+                    if (game.LaunchCommand.CanExecute(o))
+                    {
+                        game.LaunchCommand.Execute(o);
+                    }
+                }
+            } catch (Exception ex)
+            {
+                DialogViewModel = new ErrorDialogViewModel("Could not launch a random game!\n\r" +
+                                                           "Are you sure Steam is installed on this machine and links starting with \"steam://\" are registered? \n\r" +
                                                            ex.Message);
             }
         }

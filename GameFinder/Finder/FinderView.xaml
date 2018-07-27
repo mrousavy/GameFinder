@@ -96,13 +96,34 @@
             </StackPanel>
 
 
-            <StackPanel Grid.Row="1" Grid.Column="0">
-                <UserControl Content="{Binding MyProfileViewModel}" />
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <UserControl Grid.Row="0" Content="{Binding MyProfileViewModel}" />
 
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ScrollViewer
+                    Grid.Row="1"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Disabled">
                     <ItemsControl ItemsSource="{Binding Friends}" />
                 </ScrollViewer>
-            </StackPanel>
+
+                <Button
+                    Grid.Row="2"
+                    Width="35"
+                    Height="35"
+                    Margin="5"
+                    Padding="-15"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding LaunchRandomGameCommand}"
+                    Content="{md:PackIcon Kind=AutoFix}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Launch a random game" />
+            </Grid>
 
             <ScrollViewer
                 Name="ScrollViewer"
