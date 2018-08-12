@@ -93,7 +93,8 @@
                     dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"
                     dd:DragDrop.IsDragSource="True"
                     dd:DragDrop.IsDropTarget="True"
-                    ItemsSource="{Binding AllFriends}" />
+                    ItemsSource="{Binding AllFriends}"
+                    ScrollViewer.CanContentScroll="False" />
 
                 <ListView
                     Grid.Row="2"
@@ -103,7 +104,8 @@
                     dd:DragDrop.DragAdornerTemplate="{StaticResource UserDragAdorner}"
                     dd:DragDrop.IsDragSource="True"
                     dd:DragDrop.IsDropTarget="True"
-                    ItemsSource="{Binding ChosenFriends}" />
+                    ItemsSource="{Binding ChosenFriends}"
+                    ScrollViewer.CanContentScroll="False" />
 
                 <Button
                     Grid.Row="3"
