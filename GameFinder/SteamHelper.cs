@@ -6,6 +6,7 @@ using GameFinder.Game;
 using GameFinder.User;
 using GameFinder.UserSmall;
 using Steam.Models.SteamCommunity;
+using SteamWebAPI2.Interfaces;
 
 namespace GameFinder
 {
