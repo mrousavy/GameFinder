@@ -12,6 +12,7 @@ namespace GameFinder.Game
         private string _iconUrl;
 
         private ICommand _launchCommand;
+        private ICommand _openStoreCommand;
 
         private string _name;
 
@@ -19,6 +20,7 @@ namespace GameFinder.Game
         {
             AppId = appId;
             LaunchCommand = new RelayCommand(LaunchAction);
+            OpenStoreCommand = new RelayCommand(OpenStoreActin);
         }
 
         public ulong AppId
@@ -45,6 +47,12 @@ namespace GameFinder.Game
             set => Set(ref _launchCommand, value);
         }
 
+        public ICommand OpenStoreCommand
+        {
+            get => _openStoreCommand;
+            set => Set(ref _openStoreCommand, value);
+        }
+
         private void LaunchAction(object o)
         {
             try
@@ -53,6 +61,23 @@ namespace GameFinder.Game
             } catch (Exception ex)
             {
                 Debug.WriteLine($"Could not launch app! {ex.Message}");
+            }
+        }
+
+        private void OpenStoreActin(object o)
+        {
+            try
+            {
+                Process.Start($"steam://store/{AppId}");
+            } catch (Exception ex1)
+            {
+                try
+                {
+                    Process.Start($"https://store.steampowered.com/app/{AppId}");
+                } catch (Exception ex2)
+                {
+                    Debug.WriteLine($"Could not open store page! {ex1.Message} /// {ex2.Message}");
+                }
             }
         }
 

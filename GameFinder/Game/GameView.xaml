@@ -36,6 +36,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <Image
@@ -64,7 +65,21 @@
                     Grid.Column="2"
                     Width="35"
                     Height="35"
-                    Margin="8"
+                    Margin="3"
+                    Padding="-15"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding OpenStoreCommand}"
+                    Content="{md:PackIcon Web}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="Open Store Page" />
+
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Width="35"
+                    Height="35"
+                    Margin="3"
                     Padding="-15"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
