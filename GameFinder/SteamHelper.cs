@@ -6,7 +6,6 @@ using GameFinder.Game;
 using GameFinder.User;
 using GameFinder.UserSmall;
 using Steam.Models.SteamCommunity;
-using SteamWebAPI2.Interfaces;
 
 namespace GameFinder
 {
@@ -22,7 +21,9 @@ namespace GameFinder
         public static GameViewModel OwnedGameToGame(OwnedGameModel game)
         {
             if (game == null)
+            {
                 return null;
+            }
 
             string url = Extensions.Valid(game.ImgLogoUrl)
                 ? $"http://media.steampowered.com/steamcommunity/public/images/apps/{game.AppId}/{game.ImgLogoUrl}.jpg"
@@ -58,7 +59,9 @@ namespace GameFinder
         public static UserSmallViewModel ProfileToUserSmall(PlayerSummaryModel profile)
         {
             if (profile == null)
+            {
                 return null;
+            }
 
             return new UserSmallViewModel(profile.SteamId)
             {
@@ -70,7 +73,9 @@ namespace GameFinder
         public static UserViewModel ProfileToUser(PlayerSummaryModel profile)
         {
             if (profile == null)
+            {
                 return null;
+            }
 
             return new UserViewModel(profile.SteamId)
             {

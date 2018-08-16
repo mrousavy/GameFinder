@@ -15,7 +15,9 @@ namespace GameFinder
             set
             {
                 if (Config != null)
+                {
                     Config.ApiKey = value;
+                }
             }
         }
 
@@ -25,7 +27,9 @@ namespace GameFinder
             set
             {
                 if (Config != null)
+                {
                     Config.UserId = value;
+                }
             }
         }
     }

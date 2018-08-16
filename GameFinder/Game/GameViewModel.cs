@@ -12,9 +12,9 @@ namespace GameFinder.Game
         private string _iconUrl;
 
         private ICommand _launchCommand;
-        private ICommand _openStoreCommand;
 
         private string _name;
+        private ICommand _openStoreCommand;
 
         public GameViewModel(ulong appId)
         {

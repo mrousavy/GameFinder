@@ -101,7 +101,9 @@ namespace GameFinder.FriendChooser
         private async Task LoadAsync()
         {
             if (Session.SteamUser == null)
+            {
                 return;
+            }
 
             DialogViewModel = new LoadingDialogViewModel("Loading friends...");
             try

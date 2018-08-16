@@ -10,11 +10,15 @@ namespace GameFinder.User
     {
         private Uri _avatarUri;
 
+        private int _matchingGames;
+
         private ICommand _openProfileCommand;
 
         private string _realName;
 
         private UserStatus _state;
+
+        private int _totalGames;
 
         private string _url;
 
@@ -22,10 +26,6 @@ namespace GameFinder.User
         private string _username;
 
         private int _visibilityState;
-
-        private int _matchingGames;
-
-        private int _totalGames;
 
         public UserViewModel(ulong userId)
         {

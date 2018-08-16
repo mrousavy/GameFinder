@@ -17,7 +17,9 @@ namespace GameFinder.Finder
         {
             double width = ScrollViewer.ActualWidth;
             if (DataContext is FinderViewModel model)
+            {
                 model.TileColumns = (int) width / 300; // 300 is a Tile's width
+            }
         }
     }
 }

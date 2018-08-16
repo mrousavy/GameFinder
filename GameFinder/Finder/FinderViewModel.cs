@@ -16,25 +16,24 @@ namespace GameFinder.Finder
 {
     public class FinderViewModel : ViewModel
     {
+        private readonly Random _random;
         private object _dialogViewModel;
 
         private ObservableCollection<UserViewModel> _friends;
+
+        private ObservableCollection<GameViewModel> _games;
 
         private ICommand _gitHubCommand;
 
         private bool _isDialogOpen;
 
+        private ICommand _launchRandomGameCommand;
+
         private UserViewModel _myProfileViewModel;
 
         private ICommand _reportBugCommand;
 
-        private ObservableCollection<GameViewModel> _games;
-
         private int _tileColumns;
-
-        private ICommand _launchRandomGameCommand;
-
-        private readonly Random _random;
 
         public FinderViewModel()
         {
@@ -164,7 +163,9 @@ namespace GameFinder.Finder
         private async Task Load(PlayerSummaryModel you, IList<PlayerSummaryModel> profiles)
         {
             if (Session.SteamUser == null)
+            {
                 return;
+            }
 
             DialogViewModel = new LoadingDialogViewModel("Matching games...");
             try
@@ -178,8 +179,10 @@ namespace GameFinder.Finder
                 {
                     user.Games = await SteamHelper.LoadGamesAsync(user.SteamId);
                     if (!user.Games.Any())
+                    {
                         throw new Exception(
                             $"{user.SteamId}'s steam profile is set to private or games could not be loaded!");
+                    }
                 }
 
                 var equalityComparer = new GameEqualityComparer();
