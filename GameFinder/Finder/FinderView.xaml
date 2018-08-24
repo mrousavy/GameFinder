@@ -107,7 +107,7 @@
                 <ScrollViewer
                     Grid.Row="1"
                     HorizontalScrollBarVisibility="Auto"
-                    VerticalScrollBarVisibility="Disabled">
+                    VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Friends}" />
                 </ScrollViewer>
 
