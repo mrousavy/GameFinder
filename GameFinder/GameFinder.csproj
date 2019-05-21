@@ -62,6 +62,7 @@
     <Compile Include="Converter\SteamStateToColorConverter.cs" />
     <Compile Include="Converter\SteamStateToIconConverter.cs" />
     <Compile Include="Converter\UrlToImageConverter.cs" />
+    <Compile Include="DiscordHelper.cs" />
     <Compile Include="ErrorDialog\ErrorDialogView.xaml.cs">
       <DependentUpon>ErrorDialogView.xaml</DependentUpon>
     </Compile>
@@ -178,6 +179,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DiscordRichPresence">
+      <Version>1.0.108</Version>
+    </PackageReference>
     <PackageReference Include="gong-wpf-dragdrop">
       <Version>1.1.0</Version>
     </PackageReference>

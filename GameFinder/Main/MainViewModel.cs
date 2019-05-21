@@ -10,6 +10,7 @@ namespace GameFinder.Main
         {
             var feed = MessageFeed<TransitionerMoveStruct>.Feed;
             feed.MessageReceived += TransitionerMoveReceived;
+            DiscordHelper.Initialize();
         }
 
         public int TransitionerIndex

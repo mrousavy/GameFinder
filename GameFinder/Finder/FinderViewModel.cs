@@ -160,12 +160,13 @@ namespace GameFinder.Finder
             await Load(message.You, message.Friends);
         }
 
-        private async Task Load(PlayerSummaryModel you, IList<PlayerSummaryModel> profiles)
+        private async Task Load(PlayerSummaryModel you, ICollection<PlayerSummaryModel> profiles)
         {
             if (Session.SteamUser == null)
             {
                 return;
             }
+            DiscordHelper.SetPresence(profiles.Count > 1 ? $"Matching {profiles.Count} profiles" : $"Matching {profiles.Count} profile");
 
             DialogViewModel = new LoadingDialogViewModel("Matching games...");
             try
@@ -201,6 +202,8 @@ namespace GameFinder.Finder
                 // Load all friends
                 var ordered = profiles.Select(SteamHelper.ProfileToUser).OrderBy(u => u.Username);
                 Friends = new ObservableCollection<UserViewModel>(ordered);
+
+                DiscordHelper.SetPresence($"Browsing {Games.Count} games..");
 
                 IsDialogOpen = false;
             } catch (Exception ex)

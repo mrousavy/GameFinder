@@ -30,6 +30,18 @@ namespace GameFinder.FriendChooser
             AllFriends = new ObservableCollection<UserSmallViewModel>();
             ChosenFriends = new ObservableCollection<UserSmallViewModel>();
             OkCommand = new RelayCommand(OkAction, o => ChosenFriends.Any());
+            DiscordHelper.SetPresence("Selecting friends");
+            ChosenFriends.CollectionChanged += ChosenFriendsCollectionChanged;
+        }
+
+        private void ChosenFriendsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            string presence = $"Selected {ChosenFriends.Count} friend";
+            if (ChosenFriends.Count != 1)
+            {
+                presence += "s";
+            }
+            DiscordHelper.SetPresence(presence);
         }
 
         public ObservableCollection<UserSmallViewModel> AllFriends
@@ -85,7 +97,8 @@ namespace GameFinder.FriendChooser
 
                 IsDialogOpen = false;
                 Extensions.MoveForwards();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 DialogViewModel = new ErrorDialogViewModel(
                     $"Could not load selected profiles! Perhaps a profile is set to private?\n\r{ex.Message}");
@@ -113,7 +126,8 @@ namespace GameFinder.FriendChooser
                 AllFriends = new ObservableCollection<UserSmallViewModel>(ordered);
 
                 IsDialogOpen = false;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 DialogViewModel = new ErrorDialogViewModel(
                     $"Could not load friends! Check your API Key, User ID and profile visibility!\n\r{ex.Message}");
