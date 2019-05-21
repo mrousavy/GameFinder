@@ -23,9 +23,23 @@ Ever felt like not knowing what to play even though you have thousands of games 
 * Launch a random game when you can't decide
 * Material Design UI
 
-<p align="center">
-    <img src="Images/demo.gif" alt="Demo GIF" width=800 />
-</p>
+
+
+<details>
+  <summary>
+    <h4>Click to show live demo</h4>
+    <p align="center">
+        <img src="Images/screenshot.png" alt="Demo Screenshot" width=800 />
+    </p>
+  </summary>
+  <p>
+    <p align="center">
+        <img src="Images/demo.gif" alt="Demo GIF" width=800 />
+    </p>
+  </p>
+</details>
+
+
 
 ### How to run
 ##### Pre-compiled
