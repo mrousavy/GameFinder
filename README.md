@@ -27,7 +27,7 @@ Ever felt like not knowing what to play even though you have thousands of games 
 
 <details>
   <summary>
-    <h4>Click to show live demo</h4>
+    <b>click to show demo GIF</b>
     <p align="center">
         <img src="Images/screenshot.png" alt="Demo Screenshot" width=800 />
     </p>
