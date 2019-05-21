@@ -166,7 +166,10 @@ namespace GameFinder.Finder
             {
                 return;
             }
-            DiscordHelper.SetPresence(profiles.Count > 1 ? $"Matching {profiles.Count} profiles" : $"Matching {profiles.Count} profile");
+
+            DiscordHelper.SetPresence(profiles.Count > 1
+                ? $"Matching {profiles.Count} profiles"
+                : $"Matching {profiles.Count} profile");
 
             DialogViewModel = new LoadingDialogViewModel("Matching games...");
             try

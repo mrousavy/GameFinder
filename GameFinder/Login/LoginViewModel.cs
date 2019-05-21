@@ -94,8 +94,7 @@ namespace GameFinder.Login
             try
             {
                 Process.Start("steam://openurl/https://steamcommunity.com/dev/apikey");
-            }
-            catch
+            } catch
             {
                 Process.Start("https://steamcommunity.com/dev/apikey");
             }
@@ -108,8 +107,7 @@ namespace GameFinder.Login
             {
                 Model.Login(ApiKey, UserId);
                 IsDialogOpen = false;
-            }
-            catch
+            } catch
             {
                 DialogViewModel = new ErrorDialogViewModel("The given API Key or User ID is invalid!\n\r" +
                                                            "Please check your inputs and try again!");

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DiscordRPC;
 using DiscordRPC.Logging;
 
@@ -15,17 +11,11 @@ namespace GameFinder
 
         public static void Initialize()
         {
-            Client = new DiscordRpcClient(DiscordClientId) { Logger = new ConsoleLogger() { Level = LogLevel.Warning } };
+            Client = new DiscordRpcClient(DiscordClientId) { Logger = new ConsoleLogger { Level = LogLevel.Warning } };
 
-            Client.OnReady += (sender, e) =>
-            {
-                Console.WriteLine($"Discord ready! {e.User.Username}");
-            };
+            Client.OnReady += (sender, e) => { Console.WriteLine($"Discord ready! {e.User.Username}"); };
 
-            Client.OnPresenceUpdate += (sender, e) =>
-            {
-                Console.WriteLine($"Presence updated: {e.Presence}");
-            };
+            Client.OnPresenceUpdate += (sender, e) => { Console.WriteLine($"Presence updated: {e.Presence}"); };
 
             Client.Initialize();
         }
@@ -41,7 +31,7 @@ namespace GameFinder
             {
                 Details = "GitHub: mrousavy/GameFinder",
                 State = status,
-                Assets = new Assets()
+                Assets = new Assets
                 {
                     LargeImageKey = "icon",
                     LargeImageText = "Steam GameFinder by mrousavy"
