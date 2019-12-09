@@ -9,11 +9,12 @@ using GameFinder.ErrorDialog;
 using GameFinder.LoadingDialog;
 using GameFinder.UserSmall;
 using Jellyfish;
+using Jellyfish.Feeds;
 using Steam.Models.SteamCommunity;
 
 namespace GameFinder.FriendChooser
 {
-    public class FriendChooserViewModel : ViewModel
+    public class FriendChooserViewModel : ViewModel, INode<bool>
     {
         private ObservableCollection<UserSmallViewModel> _allFriends;
 
@@ -26,8 +27,8 @@ namespace GameFinder.FriendChooser
 
         public FriendChooserViewModel()
         {
-            var feed = MessageFeed<bool>.Feed;
-            feed.MessageReceived += OnMessageReceived;
+            var feed = Feed<bool>.Instance;
+            feed.RegisterNode(this);
             AllFriends = new ObservableCollection<UserSmallViewModel>();
             ChosenFriends = new ObservableCollection<UserSmallViewModel>();
             OkCommand = new RelayCommand(OkAction, o => ChosenFriends.Any());
@@ -94,7 +95,7 @@ namespace GameFinder.FriendChooser
                     profiles.Add(profile);
                 }
 
-                var feed = MessageFeed<FriendsLoadedStruct>.Feed;
+                var feed = Feed<FriendsLoadedStruct>.Instance;
                 feed.Notify(new FriendsLoadedStruct(profiles, you));
 
                 IsDialogOpen = false;
@@ -107,7 +108,7 @@ namespace GameFinder.FriendChooser
         }
 
 
-        private async void OnMessageReceived(bool loggedIn)
+        public async void MessageReceived(bool loggedIn)
         {
             await LoadAsync().ConfigureAwait(false);
         }

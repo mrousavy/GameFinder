@@ -1,5 +1,8 @@
-﻿using Jellyfish;
+﻿using System.Net.Http;
+using Jellyfish;
+using Jellyfish.Feeds;
 using SteamWebAPI2.Interfaces;
+using SteamWebAPI2.Utilities;
 
 namespace GameFinder.Login
 {
@@ -10,9 +13,10 @@ namespace GameFinder.Login
             Session.ApiKey = apiKey;
             Session.UserId = ulong.Parse(userId);
 
-            Session.SteamUser = new SteamUser(apiKey);
-            Session.SteamPlayer = new PlayerService(apiKey);
-            var feed = MessageFeed<bool>.Feed;
+            var webInterfaceFactory = new SteamWebInterfaceFactory(apiKey);
+            Session.SteamUser = webInterfaceFactory.CreateSteamWebInterface<SteamUser>(new HttpClient());
+            Session.SteamPlayer = webInterfaceFactory.CreateSteamWebInterface<PlayerService>(new HttpClient());
+            var feed = Feed<bool>.Instance;
             feed.Notify(true);
 
             Extensions.MoveForwards();

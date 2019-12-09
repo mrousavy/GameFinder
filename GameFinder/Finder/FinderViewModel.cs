@@ -10,11 +10,12 @@ using GameFinder.Game;
 using GameFinder.LoadingDialog;
 using GameFinder.User;
 using Jellyfish;
+using Jellyfish.Feeds;
 using Steam.Models.SteamCommunity;
 
 namespace GameFinder.Finder
 {
-    public class FinderViewModel : ViewModel
+    public class FinderViewModel : ViewModel, INode<FriendsLoadedStruct>
     {
         private readonly Random _random;
         private object _dialogViewModel;
@@ -37,8 +38,8 @@ namespace GameFinder.Finder
 
         public FinderViewModel()
         {
-            var feed = MessageFeed<FriendsLoadedStruct>.Feed;
-            feed.MessageReceived += OnMessageReceived;
+            var feed = Feed<FriendsLoadedStruct>.Instance;
+            feed.RegisterNode(this);
             ReportBugCommand = new RelayCommand(ReportBugAction);
             GitHubCommand = new RelayCommand(GitHubAction);
             LaunchRandomGameCommand = new RelayCommand(LaunchRandomGameAction, o => Games?.Count > 0);
@@ -155,7 +156,7 @@ namespace GameFinder.Finder
             }
         }
 
-        private async void OnMessageReceived(FriendsLoadedStruct message)
+        public async void MessageReceived(FriendsLoadedStruct message)
         {
             await Load(message.You, message.Friends);
         }
@@ -181,6 +182,7 @@ namespace GameFinder.Finder
 
                 foreach (var user in users)
                 {
+                    
                     user.Games = await SteamHelper.LoadGamesAsync(user.SteamId);
                     if (!user.Games.Any())
                     {
@@ -188,6 +190,8 @@ namespace GameFinder.Finder
                             $"{user.SteamId}'s steam profile is set to private or games could not be loaded!");
                     }
                 }
+
+
 
                 var equalityComparer = new GameEqualityComparer();
                 var mutualGames = users

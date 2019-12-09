@@ -1,15 +1,16 @@
 ﻿using Jellyfish;
+using Jellyfish.Feeds;
 
 namespace GameFinder.Main
 {
-    public class MainViewModel : ViewModel
+    public class MainViewModel : ViewModel, INode<TransitionerMoveStruct>
     {
         private int _transitionerIndex;
 
         public MainViewModel()
         {
-            var feed = MessageFeed<TransitionerMoveStruct>.Feed;
-            feed.MessageReceived += TransitionerMoveReceived;
+            var feed = Feed<TransitionerMoveStruct>.Instance;
+            feed.RegisterNode(this);
             DiscordHelper.Initialize();
         }
 
@@ -19,7 +20,7 @@ namespace GameFinder.Main
             set => Set(ref _transitionerIndex, value);
         }
 
-        private void TransitionerMoveReceived(TransitionerMoveStruct message)
+        public void MessageReceived(TransitionerMoveStruct message)
         {
             switch (message.Direction)
             {
